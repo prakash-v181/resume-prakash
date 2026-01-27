@@ -4430,6 +4430,61 @@
                 left: 20px;
             }
         }
+
+        
+        /* ===============================
+   CHATBOT RESPONSIVE ONLY
+   =============================== */
+
+/* DESKTOP (default – no change needed) */
+#ai-chat-container {
+  width: 420px;
+  height: 650px;
+  bottom: 120px;
+  right: 30px;
+  border-radius: 20px;
+}
+
+/* MOBILE VIEW */
+@media (max-width: 768px) {
+
+  /* Chatbot becomes FULL SCREEN */
+  #ai-chat-container {
+    width: 100vw;
+    height: 100vh;
+    bottom: 0;
+    right: 0;
+    border-radius: 0;
+  }
+
+  /* Floating button smaller */
+  #ai-chat-fab {
+    width: 55px;
+    height: 55px;
+    bottom: 20px;
+    right: 20px;
+  }
+
+  /* Header compact */
+  #ai-chat-header {
+    padding: 15px;
+  }
+
+  /* Messages spacing */
+  #ai-messages {
+    padding: 15px;
+  }
+
+  /* Input area fixed properly */
+  #ai-input-area {
+    padding: 12px;
+  }
+
+  #ai-message-input {
+    font-size: 14px;
+  }
+}
+
     </style>
 
     <div id="ai-chat-fab" onclick="toggleChat()">
