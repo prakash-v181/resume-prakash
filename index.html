@@ -1368,701 +1368,249 @@
 
     <!-- chatbot AI -->
     
-    <!-- ========== AI CHATBOT WITH FIXED VOICE ========== -->
-    <style>
-        :root {
-            --primary: #6366f1;
-            --secondary: #8b5cf6;
-            --success: #10b981;
-        }
+<!-- Icons & Fonts -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
 
-        #ai-chat-fab {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            z-index: 9999;
-            animation: pulse-fab 2s infinite;
-            transition: transform 0.3s;
-        }
-
-        #ai-chat-fab:hover {
-            transform: scale(1.1);
-        }
-
-        @keyframes pulse-fab {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7); }
-            50% { box-shadow: 0 0 0 20px rgba(102, 126, 234, 0); }
-        }
-
-        #ai-chat-container {
-            position: fixed;
-            bottom: 120px;
-            right: 30px;
-            width: 420px;
-            height: 650px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            display: none;
-            flex-direction: column;
-            z-index: 9998;
-        }
-
-        #ai-chat-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-radius: 20px 20px 0 0;
-        }
-
-        .ai-header-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .ai-avatar {
-            width: 45px;
-            height: 45px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-
-        .ai-header-info h3 {
-            font-size: 18px;
-            margin: 0 0 5px 0;
-        }
-
-        .ai-status {
-            font-size: 13px;
-            opacity: 0.9;
-        }
-
-        .ai-header-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-            margin-left: 5px;
-            transition: all 0.2s;
-        }
-
-        .ai-header-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
-
-        #ai-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        #ai-messages::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        #ai-messages::-webkit-scrollbar-thumb {
-            background: #6366f1;
-            border-radius: 10px;
-        }
-
-        .ai-message {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .ai-message.user {
-            flex-direction: row-reverse;
-        }
-
-        .ai-message-avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        .bot .ai-message-avatar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .user .ai-message-avatar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .ai-message-content {
-            max-width: 75%;
-            padding: 12px 16px;
-            border-radius: 18px;
-            line-height: 1.5;
-            font-size: 14px;
-            white-space: pre-line;
-        }
-
-        .bot .ai-message-content {
-            background: #f3f4f6;
-            color: #111827;
-        }
-
-        .user .ai-message-content {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .ai-welcome-screen {
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .ai-welcome-icon {
-            font-size: 60px;
-            margin-bottom: 20px;
-            animation: wave 2s infinite;
-        }
-
-        @keyframes wave {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(20deg); }
-            75% { transform: rotate(-20deg); }
-        }
-
-        .ai-welcome-screen h2 {
-            color: #6366f1;
-            margin-bottom: 10px;
-        }
-
-        .ai-welcome-screen p {
-            color: #6b7280;
-        }
-
-        #ai-quick-actions {
-            padding: 15px 20px;
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .ai-quick-btn {
-            padding: 8px 16px;
-            background: #6366f1;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .ai-quick-btn:hover {
-            background: #4f46e5;
-            transform: translateY(-2px);
-        }
-
-        #ai-input-area {
-            padding: 20px;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-            gap: 10px;
-        }
-
-        #ai-message-input {
-            flex: 1;
-            padding: 12px 16px;
-            border: 2px solid #6366f1;
-            border-radius: 25px;
-            outline: none;
-            font-size: 14px;
-        }
-
-        #ai-message-input:focus {
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-
-        .ai-input-btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            font-size: 20px;
-            transition: all 0.2s;
-        }
-
-        #ai-voice-btn {
-            background: #8b5cf6;
-            color: white;
-        }
-
-        #ai-voice-btn:hover {
-            background: #7c3aed;
-            transform: scale(1.1);
-        }
-
-        #ai-voice-btn.recording {
-            background: #ef4444;
-            animation: pulse-recording 1s infinite;
-        }
-
-        @keyframes pulse-recording {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            50% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
-        }
-
-        #ai-send-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        #ai-send-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .voice-status {
-            position: fixed;
-            bottom: 790px;
-            right: 50px;
-            background: #ef4444;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
-            animation: fadeIn 0.3s;
-            z-index: 10000;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 480px) {
-            #ai-chat-container {
-                width: 100%;
-                height: 100%;
-                bottom: 0;
-                right: 0;
-                border-radius: 0;
-            }
-            .voice-status {
-                bottom: auto;
-                top: 20px;
-                right: 20px;
-                left: 20px;
-            }
-        }
-
-        
-        /* ===============================
-   CHATBOT RESPONSIVE ONLY
-   =============================== */
-
-/* DESKTOP (default – no change needed) */
-#ai-chat-container {
-  width: 420px;
-  height: 650px;
-  bottom: 120px;
-  right: 30px;
-  border-radius: 20px;
+<style>
+:root {
+  --primary: #4f46e5;
+  --gradient: linear-gradient(135deg,#6366f1,#8b5cf6);
+  --glass: rgba(255,255,255,0.95);
+  --text: #1e293b;
+  --shadow: 0 12px 40px rgba(0,0,0,.25);
 }
 
-/* MOBILE VIEW */
-@media (max-width: 768px) {
+#ai-widget-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 60px;
+  height: 60px;
+  background: var(--gradient);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(79,70,229,.5);
+  z-index: 2147483647;
+}
+#ai-widget-btn i { color:white;font-size:26px }
 
-  /* Chatbot becomes FULL SCREEN */
-  #ai-chat-container {
-    width: 100vw;
-    height: 100vh;
-    bottom: 0;
-    right: 0;
-    border-radius: 0;
-  }
-
-  /* Floating button smaller */
-  #ai-chat-fab {
-    width: 55px;
-    height: 55px;
-    bottom: 20px;
-    right: 20px;
-  }
-
-  /* Header compact */
-  #ai-chat-header {
-    padding: 15px;
-  }
-
-  /* Messages spacing */
-  #ai-messages {
-    padding: 15px;
-  }
-
-  /* Input area fixed properly */
-  #ai-input-area {
-    padding: 12px;
-  }
-
-  #ai-message-input {
-    font-size: 14px;
-  }
+#ai-widget-window {
+  position: fixed;
+  bottom: 100px;
+  right: 25px;
+  width: 380px;
+  height: 600px;
+  max-height: 85vh;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 2147483647;
+  font-family: 'Outfit', sans-serif;
+  animation: slideUp .25s ease;
 }
 
-    </style>
+@keyframes slideUp {
+  from { transform: translateY(30px) scale(.95); opacity:0 }
+  to { transform: translateY(0) scale(1); opacity:1 }
+}
 
-    <div id="ai-chat-fab" onclick="toggleChat()">
-        <svg width="35" height="35" viewBox="0 0 24 24" fill="white">
-            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
-        </svg>
+#ai-header {
+  padding: 16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid rgba(0,0,0,.05);
+}
+
+.ai-title {
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.ai-dot {
+  width:7px;height:7px;
+  background:#10b981;
+  border-radius:50%;
+}
+
+#ai-feed {
+  flex:1;
+  padding:14px;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  background:#f8fafc;
+}
+
+.ai-msg {
+  max-width:85%;
+  font-size:14px;
+}
+.ai-user { align-self:flex-end }
+.ai-bot { align-self:flex-start }
+
+.ai-bubble {
+  padding:12px 16px;
+  border-radius:18px;
+}
+.ai-user .ai-bubble {
+  background: var(--gradient);
+  color:white;
+  border-bottom-right-radius:4px;
+}
+.ai-bot .ai-bubble {
+  background:white;
+  border:1px solid rgba(0,0,0,.05);
+  border-bottom-left-radius:4px;
+}
+
+.ai-time {
+  font-size:10px;
+  color:#94a3b8;
+  margin-top:4px;
+}
+
+#ai-controls {
+  padding:12px;
+  border-top:1px solid rgba(0,0,0,.05);
+  background:white;
+}
+
+#ai-lang {
+  width:100%;
+  font-size:12px;
+  padding:6px;
+  margin-bottom:8px;
+}
+
+.ai-input {
+  display:flex;
+  align-items:center;
+  background:#f1f5f9;
+  border-radius:20px;
+  padding:6px 8px;
+}
+.ai-input input {
+  flex:1;
+  border:none;
+  background:transparent;
+  outline:none;
+}
+.ai-btn {
+  border:none;
+  background:none;
+  font-size:16px;
+  cursor:pointer;
+}
+
+@media(max-width:480px){
+  #ai-widget-window{
+    width:100%;
+    height:100%;
+    bottom:0;
+    right:0;
+    border-radius:0;
+  }
+}
+</style>
+
+<div id="ai-widget-btn" onclick="toggleAI()">
+  <i class="fas fa-comment-dots"></i>
+</div>
+
+<div id="ai-widget-window">
+  <div id="ai-header">
+    <div class="ai-title">
+      <i class="fas fa-robot"></i> Prakash AI
+      <span class="ai-dot"></span>
     </div>
+    <button onclick="toggleAI()" class="ai-btn"><i class="fas fa-times"></i></button>
+  </div>
 
-    <div id="ai-chat-container">
-        <div id="ai-chat-header">
-            <div class="ai-header-left">
-                <div class="ai-avatar">🤖</div>
-                <div class="ai-header-info">
-                    <h3>Prakash AI Assistant</h3>
-                    <div class="ai-status">● Online - Voice Enabled</div>
-                </div>
-            </div>
-            <div>
-                <button class="ai-header-btn" onclick="toggleVoiceOutput()" title="Toggle Voice Response" id="voice-toggle-btn">🔊</button>
-                <button class="ai-header-btn" onclick="clearChat()" title="Clear Chat">🗑️</button>
-                <button class="ai-header-btn" onclick="toggleChat()" title="Close">✕</button>
-            </div>
-        </div>
+  <div id="ai-feed"></div>
 
-        <div id="ai-messages">
-            <div class="ai-welcome-screen">
-                <div class="ai-welcome-icon">👋</div>
-                <h2>Hi, I'm Prakash's AI Assistant!</h2>
-                <p>Ask me about skills, projects, experience, or contact info!</p>
-                <p style="margin-top: 10px; font-size: 12px;">🎤 Click mic to speak | Click again to stop</p>
-            </div>
-        </div>
+  <div id="ai-controls">
+    <select id="ai-lang">
+      <option value="en-US">English</option>
+      <option value="hi-IN">Hindi</option>
+      <option value="kn-IN">Kannada</option>
+    </select>
 
-        <div id="ai-quick-actions">
-            <button class="ai-quick-btn" onclick="quickAsk('Tell me about Prakash')">👤 About</button>
-            <button class="ai-quick-btn" onclick="quickAsk('What are his skills?')"> Skills</button>
-            <button class="ai-quick-btn" onclick="quickAsk('Show me his projects')"> Projects</button>
-            <button class="ai-quick-btn" onclick="quickAsk('Contact info?')"> Contact</button>
-        </div>
-
-        <div id="ai-input-area">
-            <input type="text" id="ai-message-input" placeholder="Type or speak your message..." onkeypress="if(event.key==='Enter')sendMessage()" />
-            <button class="ai-input-btn" id="ai-voice-btn" onclick="toggleVoiceInput()" title="Click to speak, click again to stop">🎤</button>
-            <button class="ai-input-btn" id="ai-send-btn" onclick="sendMessage()">➤</button>
-        </div>
+    <div class="ai-input">
+      <input id="ai-input" placeholder="Ask something...">
+      <button onclick="startVoice()" class="ai-btn"><i class="fas fa-microphone"></i></button>
+      <button onclick="sendMsg()" class="ai-btn"><i class="fas fa-paper-plane"></i></button>
     </div>
+  </div>
+</div>
 
-    <script>
-        const aiKnowledge = {
-            about: {
-                keywords: ['about', 'who', 'introduce', 'prakash', 'yourself'],
-                response: "Hi! I'm Prakash, a passionate MERN Stack Developer and Junior Full-Stack Developer. I specialize in building scalable, efficient web applications using MongoDB, Express.js, React, and Node.js. I have expertise in both frontend and backend development with JavaScript, HTML5, CSS3, and modern frameworks."
-            },
-            skills: {
-                keywords: ['skill', 'technology', 'tech', 'stack', 'know', 'proficient'],
-                response: "My technical skills include:\n\n Frontend: React.js, HTML5, CSS3, Bootstrap, Tailwind CSS, jQuery, JavaScript\n\n Backend: Node.js, Express.js, Spring Boot, REST APIs\n\n Databases: MongoDB, MySQL, PostgreSQL\n\n Tools: Git, GitHub, VS Code, NPM, Docker, Kubernetes\n\n Deployment: AWS, Vercel, Render, Heroku, Netlify"
-            },
-            projects: {
-                keywords: ['project', 'portfolio', 'work', 'built', 'developed', 'created'],
-                response: "Here are my key projects:\n\n Zerodha Clone - Full-stack trading platform with JWT authentication\n\n🤖 SangviGPT - AI chatbot using OpenAI API\n\n Facebook Clone - Social media platform with Google OAuth\n\n MediBuddy - Smart disease predictor using Machine Learning\n\n Airbnb Clone - Property rental platform\n\n YouTube Clone - Video platform with React and Vite\n\n BharatMart - E-commerce platform with full checkout\n\nAll projects are deployed and live!"
-            },
-            experience: {
-                keywords: ['experience', 'work', 'job', 'company', 'position', 'role'],
-                response: "My professional experience:\n\n Full-Stack Developer at Main Flow Services (Jan-Apr 2025)\n- Built inventory management with Government of India\n- Tech: ReactJS, MongoDB, NodeJS, TypeScript\n\n Software Developer at Bluestock (Feb 2025-Present)\n- Payment microservices with NestJS & Apache Kafka\n- SMS collector with Kubernetes\n\n Python & AI Intern at Edunet Foundation\n- CNN model for plastic waste classification\n\n Full Stack Dev at Take It Smart"
-            },
-            contact: {
-                keywords: ['contact', 'email', 'phone', 'reach', 'hire', 'call', 'message'],
-                response: "You can reach Prakash here:\n\n Email: prakashtare181@gmail.com\n\n Phone: +91 8050458999\n\n Location: Bidar, Karnataka, India\n\n LinkedIn: Available on the website\n\nFeel free to reach out for collaborations, job opportunities, or any questions!"
-            }
-        };
+<script>
+const BACKEND = "https://chatbotbackend-donx.onrender.com/chat";
+const feed = document.getElementById("ai-feed");
+const input = document.getElementById("ai-input");
+const lang = document.getElementById("ai-lang");
 
-        let isOpen = false;
-        let isRecording = false;
-        let recognition = null;
-        let voiceOutputEnabled = true;
+function toggleAI(){
+  const w = document.getElementById("ai-widget-window");
+  w.style.display = w.style.display === "flex" ? "none" : "flex";
+  if(feed.children.length === 0) addMsg("Hello! How can I help you today?","bot");
+}
 
-        // Initialize Speech Recognition
-        function initSpeechRecognition() {
-            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                recognition = new SpeechRecognition();
-                recognition.lang = 'en-US';
-                recognition.continuous = false;
-                recognition.interimResults = false;
+function addMsg(text,type){
+  const wrap = document.createElement("div");
+  wrap.className = "ai-msg ai-"+type;
+  wrap.innerHTML = `
+    <div class="ai-bubble">${type==="bot"?DOMPurify.sanitize(marked.parse(text)):text}</div>
+    <div class="ai-time">${new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
+  `;
+  feed.appendChild(wrap);
+  feed.scrollTop = feed.scrollHeight;
+  if(type==="bot") speak(text);
+}
 
-                recognition.onstart = function() {
-                    console.log('Voice recognition started');
-                    isRecording = true;
-                    const btn = document.getElementById('ai-voice-btn');
-                    btn.classList.add('recording');
-                    btn.textContent = '⏹️';
-                    btn.title = 'Click to stop recording';
-                    showVoiceStatus('🎤 Listening... Click mic to stop');
-                };
+async function sendMsg(){
+  const text = input.value.trim();
+  if(!text) return;
+  addMsg(text,"user");
+  input.value="";
 
-                recognition.onresult = function(event) {
-                    console.log('Voice recognition result received');
-                    const transcript = event.results[0][0].transcript;
-                    document.getElementById('ai-message-input').value = transcript;
-                    hideVoiceStatus();
-                    setTimeout(() => sendMessage(), 300);
-                };
+  const res = await fetch(BACKEND,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({message: text + ` (reply in ${lang.value})`})
+  });
+  const data = await res.json();
+  addMsg(data.reply || "Error","bot");
+}
 
-                recognition.onerror = function(event) {
-                    console.error('Speech recognition error:', event.error);
-                    hideVoiceStatus();
-                    stopRecording();
-                    
-                    if (event.error === 'not-allowed') {
-                        alert('🎤 Microphone access denied.\n\nPlease:\n1. Click the  lock icon in your browser address bar\n2. Allow microphone access\n3. Refresh the page and try again');
-                    } else if (event.error === 'no-speech') {
-                        showVoiceStatus(' No speech detected. Try again!');
-                        setTimeout(hideVoiceStatus, 2000);
-                    } else if (event.error === 'aborted') {
-                        console.log('Speech recognition aborted by user');
-                    } else {
-                        showVoiceStatus(' Error: ' + event.error);
-                        setTimeout(hideVoiceStatus, 2000);
-                    }
-                };
+function speak(text){
+  if(!speechSynthesis) return;
+  const u = new SpeechSynthesisUtterance(text.replace(/[#*_`]/g,""));
+  u.lang = lang.value;
+  speechSynthesis.speak(u);
+}
 
-                recognition.onend = function() {
-                    console.log('Voice recognition ended');
-                    stopRecording();
-                };
-            } else {
-                console.warn('Speech recognition not supported');
-            }
-        }
-
-        function toggleVoiceInput() {
-            if (!recognition) {
-                alert('🎤 Voice not supported in this browser.\n\nPlease use:\n• Chrome\n• Edge\n• Safari');
-                return;
-            }
-
-            if (isRecording) {
-                console.log('Stopping voice recognition');
-                recognition.stop();
-                stopRecording();
-                hideVoiceStatus();
-            } else {
-                console.log('Starting voice recognition');
-                try {
-                    recognition.start();
-                } catch (error) {
-                    console.error('Error starting recognition:', error);
-                    stopRecording();
-                    hideVoiceStatus();
-                }
-            }
-        }
-
-        function stopRecording() {
-            isRecording = false;
-            const btn = document.getElementById('ai-voice-btn');
-            btn.classList.remove('recording');
-            btn.textContent = '🎤';
-            btn.title = 'Click to speak';
-        }
-
-        function showVoiceStatus(text) {
-            hideVoiceStatus();
-            const status = document.createElement('div');
-            status.className = 'voice-status';
-            status.id = 'voice-status-indicator';
-            status.textContent = text;
-            document.body.appendChild(status);
-        }
-
-        function hideVoiceStatus() {
-            const status = document.getElementById('voice-status-indicator');
-            if (status) {
-                status.remove();
-            }
-        }
-
-        // Text-to-Speech
-        function speak(text) {
-            if (!voiceOutputEnabled) return;
-            
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 0.9;
-                utterance.pitch = 1;
-                utterance.volume = 1;
-                utterance.lang = 'en-US';
-                
-                window.speechSynthesis.speak(utterance);
-            }
-        }
-
-        function toggleVoiceOutput() {
-            voiceOutputEnabled = !voiceOutputEnabled;
-            const btn = document.getElementById('voice-toggle-btn');
-            btn.textContent = voiceOutputEnabled ? '🔊' : '🔇';
-            btn.title = voiceOutputEnabled ? 'Voice On (Click to mute)' : 'Voice Off (Click to unmute)';
-            
-            if (!voiceOutputEnabled && 'speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-            }
-        }
-
-        function toggleChat() {
-            const container = document.getElementById('ai-chat-container');
-            const fab = document.getElementById('ai-chat-fab');
-            isOpen = !isOpen;
-            container.style.display = isOpen ? 'flex' : 'none';
-            fab.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
-            
-            if (!isOpen && isRecording) {
-                recognition.stop();
-                stopRecording();
-                hideVoiceStatus();
-            }
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('ai-message-input');
-            const message = input.value.trim();
-            if (!message) return;
-            
-            addMessage(message, 'user');
-            input.value = '';
-            
-            setTimeout(() => {
-                const response = getResponse(message);
-                addMessage(response, 'bot');
-                speak(response);
-            }, 500);
-        }
-
-        function addMessage(text, sender) {
-            const messagesDiv = document.getElementById('ai-messages');
-            const welcome = messagesDiv.querySelector('.ai-welcome-screen');
-            if (welcome && sender === 'user') welcome.remove();
-            
-            const msg = document.createElement('div');
-            msg.className = 'ai-message ' + sender;
-            msg.innerHTML = `
-                <div class="ai-message-avatar">${sender === 'bot' ? '🤖' : '👤'}</div>
-                <div class="ai-message-content">${text}</div>
-            `;
-            messagesDiv.appendChild(msg);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        function getResponse(message) {
-            const lower = message.toLowerCase();
-            
-            for (const [key, data] of Object.entries(aiKnowledge)) {
-                for (const keyword of data.keywords) {
-                    if (lower.includes(keyword)) return data.response;
-                }
-            }
-            
-            if (lower.match(/^(hi|hello|hey|greetings)/)) {
-                return "Hello!  I'm Prakash's AI assistant. I can help you learn about his skills, projects, experience, and more. What would you like to know?";
-            }
-            
-            if (lower.match(/(thank|thanks)/)) {
-                return "You're welcome!  Is there anything else you'd like to know about Prakash?";
-            }
-            
-            if (lower.match(/(bye|goodbye|see you)/)) {
-                return "Goodbye!  Feel free to come back anytime. Have a great day!";
-            }
-            
-            return "I can help you with:\n\n• Prakash's skills and technologies\n• His projects and portfolio\n• Work experience and education\n• Contact information\n\nTry asking about any of these topics or use the quick buttons below!";
-        }
-
-        function quickAsk(question) {
-            document.getElementById('ai-message-input').value = question;
-            sendMessage();
-        }
-
-        function clearChat() {
-            if (confirm('Clear chat history?')) {
-                document.getElementById('ai-messages').innerHTML = `
-                    <div class="ai-welcome-screen">
-                        <div class="ai-welcome-icon">👋</div>
-                        <h2>Hi, I'm Prakash's AI Assistant!</h2>
-                        <p>Ask me about skills, projects, experience, or contact info!</p>
-                        <p style="margin-top: 10px; font-size: 12px;">🎤 Click mic to speak | Click again to stop</p>
-                    </div>
-                `;
-            }
-        }
-
-        // Initialize when page loads
-        window.addEventListener('load', function() {
-            initSpeechRecognition();
-            console.log('Chatbot initialized. Voice recognition available:', recognition !== null);
-        });
-
-        // Stop speech when input is focused
-        document.getElementById('ai-message-input').addEventListener('focus', function() {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-            }
-        });
-
-        // Clean up on page unload
-        window.addEventListener('beforeunload', function() {
-            if (isRecording && recognition) {
-                recognition.stop();
-            }
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-            }
-        });
-    </script>
-    <!-- ========== AI CHATBOT END ========== -->
+function startVoice(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR) return alert("Voice not supported");
+  const r = new SR();
+  r.lang = lang.value;
+  r.onresult = e => { input.value = e.results[0][0].transcript; sendMsg(); };
+  r.start();
+}
+</script>
 
 </body>
 
