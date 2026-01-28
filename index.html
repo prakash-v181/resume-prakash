@@ -1367,251 +1367,993 @@
     <!-- Footer End -->
 
     <!-- chatbot AI -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prakash AI Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Samsung+Sharp+Sans:wght@400;500;600;700&family=Samsung+One:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        }
+
+        /* Bixby Button */
+        #bixbyButton {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10000;
+            box-shadow: 0 8px 24px rgba(77, 159, 236, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        #bixbyButton:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 12px 32px rgba(77, 159, 236, 0.6);
+        }
+
+        #bixbyButton:active {
+            transform: scale(0.95);
+        }
+
+        #bixbyButton i {
+            font-size: 32px;
+            color: white;
+        }
+
+        .pulse-ring {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border: 3px solid #4D9FEC;
+            border-radius: 50%;
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Chat Container */
+        #bixbyChat {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            width: 400px;
+            height: 600px;
+            max-height: 80vh;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            display: none;
+            flex-direction: column;
+            z-index: 9999;
+            overflow: hidden;
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Header */
+        #chatHeader {
+            background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
+            padding: 20px 24px;
+            color: white;
+            border-radius: 24px 24px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #4D9FEC;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-info h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .header-info p {
+            font-size: 13px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .header-btn {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-btn:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: scale(1.1);
+        }
+
+        .header-btn.active {
+            background: white;
+            color: #4D9FEC;
+        }
+
+        /* Messages Area */
+        #messagesArea {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            background: #F8F9FA;
+            scroll-behavior: smooth;
+        }
+
+        #messagesArea::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #messagesArea::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #messagesArea::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 3px;
+        }
+
+        #messagesArea::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 16px;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-bubble {
+            max-width: 75%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.5;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .message.user .message-bubble {
+            background: #4D9FEC;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.assistant .message-bubble {
+            background: white;
+            color: #1F2937;
+            border: 1px solid #E5E7EB;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #9CA3AF;
+            margin-top: 6px;
+            text-align: right;
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 18px;
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            max-width: 75%;
+        }
+
+        .typing-text {
+            font-size: 14px;
+            color: #4D9FEC;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #4D9FEC;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* Voice Visualizer */
+        #voiceVisualizer {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            padding: 16px;
+            background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
+        }
+
+        .voice-bar {
+            width: 4px;
+            border-radius: 2px;
+            background: white;
+            animation: wave 1.2s ease-in-out infinite;
+        }
+
+        .voice-bar:nth-child(1) { height: 20px; animation-delay: 0s; }
+        .voice-bar:nth-child(2) { height: 30px; animation-delay: 0.1s; }
+        .voice-bar:nth-child(3) { height: 40px; animation-delay: 0.2s; }
+        .voice-bar:nth-child(4) { height: 50px; animation-delay: 0.3s; }
+        .voice-bar:nth-child(5) { height: 40px; animation-delay: 0.4s; }
+        .voice-bar:nth-child(6) { height: 30px; animation-delay: 0.5s; }
+        .voice-bar:nth-child(7) { height: 20px; animation-delay: 0.6s; }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1.2); }
+        }
+
+        /* Suggestions */
+        #suggestions {
+            padding: 16px 24px 12px;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            background: white;
+            border-top: 1px solid #F3F4F6;
+        }
+
+        #suggestions::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        #suggestions::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 2px;
+        }
+
+        .suggestion-chip {
+            padding: 8px 16px;
+            background: #F1F5F9;
+            border: 1px solid #E2E8F0;
+            border-radius: 16px;
+            font-size: 13px;
+            color: #475569;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .suggestion-chip:hover {
+            background: #4D9FEC;
+            color: white;
+            border-color: #4D9FEC;
+            transform: translateY(-2px);
+        }
+
+        /* Input Area */
+        #inputArea {
+            padding: 16px 24px;
+            background: white;
+            border-top: 1px solid #E5E7EB;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        #inputWrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #F9FAFB;
+            border: 2px solid #E5E7EB;
+            border-radius: 24px;
+            padding: 10px 16px;
+            transition: all 0.3s ease;
+        }
+
+        #inputWrapper:focus-within {
+            border-color: #4D9FEC;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(77, 159, 236, 0.1);
+        }
+
+        #messageInput {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 14px;
+            color: #1F2937;
+            font-family: inherit;
+        }
+
+        #messageInput::placeholder {
+            color: #9CA3AF;
+        }
+
+        #voiceButton {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        #voiceButton:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(77, 159, 236, 0.4);
+        }
+
+        #voiceButton.listening {
+            background: #EF4444;
+            animation: pulsate 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulsate {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        #sendButton {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        #sendButton:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 4px 12px rgba(77, 159, 236, 0.4);
+        }
+
+        #sendButton:active {
+            transform: scale(0.95);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            #bixbyChat {
+                bottom: 0;
+                right: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+            }
+
+            #bixbyButton {
+                bottom: 20px;
+                right: 20px;
+                width: 60px;
+                height: 60px;
+            }
+
+            #bixbyButton i {
+                font-size: 28px;
+            }
+
+            #chatHeader {
+                border-radius: 0;
+            }
+        }
+
+        /* Smooth transitions */
+        * {
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Bixby Button -->
+    <div id="bixbyButton">
+        <div class="pulse-ring"></div>
+        <i class="fas fa-comment-dots"></i>
+    </div>
+
+    <!-- Chat Interface -->
+    <div id="bixbyChat">
+        <!-- Header -->
+        <div id="chatHeader">
+            <div class="header-left">
+                <div class="avatar">P</div>
+                <div class="header-info">
+                    <h3>Prakash AI</h3>
+                    <p>
+                        <span class="status-dot"></span>
+                        <span>Online Assistant</span>
+                    </p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="voiceToggle" class="header-btn" title="Voice ON/OFF">
+                    <i class="fas fa-volume-mute"></i>
+                </button>
+                <button class="header-btn" onclick="BixbyAI.clearChat()" title="Clear">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+                <button class="header-btn" onclick="BixbyAI.close()" title="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Voice Visualizer -->
+        <div id="voiceVisualizer">
+            <div class="voice-bar"></div>
+            <div class="voice-bar"></div>
+            <div class="voice-bar"></div>
+            <div class="voice-bar"></div>
+            <div class="voice-bar"></div>
+            <div class="voice-bar"></div>
+            <div class="voice-bar"></div>
+        </div>
+
+        <!-- Suggestions -->
+        <div id="suggestions">
+            <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('Tell me about your projects')">
+                Projects
+            </div>
+            <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('What are your skills?')">
+                Skills
+            </div>
+            <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('Your experience?')">
+                Experience
+            </div>
+            <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('Contact information?')">
+                Contact
+            </div>
+            <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('Are you available?')">
+                Availability
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div id="messagesArea"></div>
+
+        <!-- Input Area -->
+        <div id="inputArea">
+            <div id="inputWrapper">
+                <input 
+                    type="text" 
+                    id="messageInput" 
+                    placeholder="Ask about projects, skills, experience..."
+                    autocomplete="off"
+                >
+                <button id="voiceButton" title="Voice Input">
+                    <i class="fas fa-microphone"></i>
+                </button>
+            </div>
+            <button id="sendButton" title="Send">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const BixbyAI = {
+            // Elements
+            button: null,
+            chat: null,
+            messagesArea: null,
+            input: null,
+            voiceButton: null,
+            voiceToggle: null,
+            voiceVisualizer: null,
+            sendButton: null,
+
+            // State
+            isOpen: false,
+            isTyping: false,
+            voiceEnabled: false,
+            isListening: false,
+            recognition: null,
+            synthesis: window.speechSynthesis,
+
+            // Portfolio Data
+            data: {
+                name: "Prakash",
+                role: "Junior Full Stack Developer",
+                email: "prakashtare181@gmail.com",
+                phone: "+91 8050458999",
+                location: "Bidar, Karnataka, India",
+                website: "prakash-v181.github.io/resume-prakash/",
+                github: "github.com/prakash-v181",
+                linkedin: "linkedin.com/in/prakash181gupta/",
+                
+                skills: [
+                    "React.js", "Node.js", "MongoDB", "Express.js", "Next.js",
+                    "JavaScript ES6+", "HTML5", "CSS3", "Redux", "Tailwind CSS",
+                    "Git", "AWS", "REST APIs", "JWT", "MySQL"
+                ],
+                
+                projects: [
+                    {
+                        name: "Zerodha Clone",
+                        description: "Full-stack trading application with React, Node.js, MongoDB and JWT authentication",
+                        tech: "MERN Stack"
+                    },
+                    {
+                        name: "Facebook Clone",
+                        description: "Social media platform with Firebase authentication and AWS deployment",
+                        tech: "React, Firebase, AWS"
+                    },
+                    {
+                        name: "BharatMart E-Commerce",
+                        description: "Complete e-commerce platform with Razorpay payment integration",
+                        tech: "MERN Stack, Razorpay"
+                    },
+                    {
+                        name: "SangvichatGPT",
+                        description: "AI conversational web application with REST API integration",
+                        tech: "React, REST APIs"
+                    },
+                    {
+                        name: "Airbnb Clone",
+                        description: "Property listing platform with full CRUD operations",
+                        tech: "MERN Stack"
+                    }
+                ],
+                
+                experience: "1 years of hands-on experience in MERN stack development with expertise in building production-ready applications",
+                education: "BE Computer Science and Engineering from VTU with CGPA 8.1",
+                availability: "Available immediately for Full Stack Developer positions"
+            },
+
+            // Initialize
+            init() {
+                this.button = document.getElementById('bixbyButton');
+                this.chat = document.getElementById('bixbyChat');
+                this.messagesArea = document.getElementById('messagesArea');
+                this.input = document.getElementById('messageInput');
+                this.voiceButton = document.getElementById('voiceButton');
+                this.voiceToggle = document.getElementById('voiceToggle');
+                this.voiceVisualizer = document.getElementById('voiceVisualizer');
+                this.sendButton = document.getElementById('sendButton');
+
+                this.setupSpeechRecognition();
+                this.attachEvents();
+                this.showWelcomeMessage();
+            },
+
+            // Setup Speech Recognition
+            setupSpeechRecognition() {
+                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    this.recognition = new SpeechRecognition();
+                    this.recognition.continuous = false;
+                    this.recognition.interimResults = false;
+                    this.recognition.lang = 'en-US';
+
+                    this.recognition.onstart = () => {
+                        this.isListening = true;
+                        this.voiceButton.classList.add('listening');
+                        this.voiceVisualizer.style.display = 'flex';
+                    };
+
+                    this.recognition.onresult = (event) => {
+                        const transcript = event.results[0][0].transcript;
+                        this.input.value = transcript;
+                        this.sendMessage();
+                    };
+
+                    this.recognition.onerror = (error) => {
+                        console.error('Speech recognition error:', error);
+                        this.stopListening();
+                    };
+
+                    this.recognition.onend = () => {
+                        this.stopListening();
+                    };
+                }
+            },
+
+            // Attach Events
+            attachEvents() {
+                this.button.onclick = () => this.toggle();
+                this.sendButton.onclick = () => this.sendMessage();
+                this.voiceButton.onclick = () => this.toggleVoiceInput();
+                this.voiceToggle.onclick = () => this.toggleVoiceOutput();
+
+                this.input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        this.sendMessage();
+                    }
+                });
+
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && this.isOpen) {
+                        this.close();
+                    }
+                });
+            },
+
+            // Toggle Chat
+            toggle() {
+                if (this.isOpen) {
+                    this.close();
+                } else {
+                    this.open();
+                }
+            },
+
+            // Open Chat
+            open() {
+                this.chat.style.display = 'flex';
+                this.button.style.display = 'none';
+                this.isOpen = true;
+                setTimeout(() => this.input.focus(), 300);
+            },
+
+            // Close Chat
+            close() {
+                this.chat.style.display = 'none';
+                this.button.style.display = 'flex';
+                this.isOpen = false;
+                this.stopListening();
+            },
+
+            // Toggle Voice Input
+            toggleVoiceInput() {
+                if (!this.recognition) {
+                    alert('Voice input is not supported in your browser. Please use Chrome or Edge.');
+                    return;
+                }
+
+                if (this.isListening) {
+                    this.stopListening();
+                } else {
+                    this.startListening();
+                }
+            },
+
+            // Start Listening
+            startListening() {
+                try {
+                    this.recognition.start();
+                } catch (error) {
+                    console.error('Error starting speech recognition:', error);
+                }
+            },
+
+            // Stop Listening
+            stopListening() {
+                this.isListening = false;
+                this.voiceButton.classList.remove('listening');
+                this.voiceVisualizer.style.display = 'none';
+                if (this.recognition) {
+                    this.recognition.stop();
+                }
+            },
+
+            // Toggle Voice Output
+            toggleVoiceOutput() {
+                this.voiceEnabled = !this.voiceEnabled;
+                this.voiceToggle.classList.toggle('active', this.voiceEnabled);
+                this.voiceToggle.innerHTML = this.voiceEnabled ?
+                    '<i class="fas fa-volume-up"></i>' :
+                    '<i class="fas fa-volume-mute"></i>';
+
+                if (!this.voiceEnabled) {
+                    this.synthesis.cancel();
+                }
+            },
+
+            // Speak
+            speak(text) {
+                if (this.voiceEnabled && this.synthesis) {
+                    this.synthesis.cancel();
+                    
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.95;
+                    utterance.pitch = 1.0;
+                    utterance.volume = 1.0;
+
+                    utterance.onstart = () => {
+                        this.voiceVisualizer.style.display = 'flex';
+                    };
+
+                    utterance.onend = () => {
+                        this.voiceVisualizer.style.display = 'none';
+                    };
+
+                    this.synthesis.speak(utterance);
+                }
+            },
+
+            // Send Message
+            sendMessage() {
+                const text = this.input.value.trim();
+                if (!text || this.isTyping) return;
+
+                this.addMessage(text, 'user');
+                this.input.value = '';
+
+                const typingIndicator = this.showTyping();
+                
+                setTimeout(() => {
+                    this.hideTyping(typingIndicator);
+                    const response = this.generateResponse(text.toLowerCase());
+                    this.addMessage(response, 'assistant');
+                    this.speak(response);
+                }, 1000 + Math.random() * 500);
+            },
+
+            // Use Suggestion
+            useSuggestion(text) {
+                this.input.value = text;
+                this.sendMessage();
+            },
+
+            // Generate Response
+            generateResponse(query) {
+                // Projects
+                if (query.includes('project')) {
+                    let response = `I have built ${this.data.projects.length} production-ready projects:\n\n`;
+                    this.data.projects.forEach((project, index) => {
+                        response += `${index + 1}. ${project.name}\n${project.description}\nTech: ${project.tech}\n\n`;
+                    });
+                    return response + "All projects are deployed and live!";
+                }
+
+                // Skills
+                if (query.includes('skill') || query.includes('technology') || query.includes('tech')) {
+                    return `My technical skills include:\n\n${this.data.skills.join(', ')}\n\nI specialize in MERN stack development with ${this.data.experience}`;
+                }
+
+                // Experience
+                if (query.includes('experience') || query.includes('work')) {
+                    return `${this.data.experience}. I have worked on multiple full-stack applications including e-commerce platforms, social media clones, and trading applications.`;
+                }
+
+                // Education
+                if (query.includes('education') || query.includes('degree') || query.includes('college')) {
+                    return this.data.education;
+                }
+
+                // Contact
+                if (query.includes('contact') || query.includes('email') || query.includes('phone') || query.includes('reach')) {
+                    return `You can reach me at:\n\nEmail: ${this.data.email}\nPhone: ${this.data.phone}\nLocation: ${this.data.location}\n\nLinkedIn: ${this.data.linkedin}\nGitHub: ${this.data.github}\nWebsite: ${this.data.website}`;
+                }
+
+                // Availability
+                if (query.includes('available') || query.includes('hire') || query.includes('join')) {
+                    return this.data.availability;
+                }
+
+                // GitHub
+                if (query.includes('github') || query.includes('code')) {
+                    return `Check out my GitHub profile at ${this.data.github} to see all my projects and contributions!`;
+                }
+
+                // Portfolio/Website
+                if (query.includes('website') || query.includes('portfolio')) {
+                    return `Visit my portfolio website at ${this.data.website} to see all my projects, skills, and experience in detail!`;
+                }
+
+                // Default Response
+                return `Hello! I am ${this.data.name}, a ${this.data.role}.\n\nYou can ask me about:\n- My Projects\n- Technical Skills\n- Work Experience\n- Education\n- Contact Information\n- Availability\n\nWhat would you like to know?`;
+            },
+
+            // Add Message
+            addMessage(text, type) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${type}`;
+
+                const bubble = document.createElement('div');
+                bubble.className = 'message-bubble';
+                bubble.textContent = text;
+
+                const time = document.createElement('div');
+                time.className = 'message-time';
+                time.textContent = new Date().toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                messageDiv.appendChild(bubble);
+                if (type === 'user') {
+                    messageDiv.appendChild(time);
+                }
+
+                this.messagesArea.appendChild(messageDiv);
+                this.scrollToBottom();
+            },
+
+            // Show Typing
+            showTyping() {
+                this.isTyping = true;
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'message assistant';
+                typingDiv.innerHTML = `
+                    <div class="typing-indicator">
+                        <span class="typing-text">Prakash AI is typing</span>
+                        <div class="typing-dots">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                `;
+                this.messagesArea.appendChild(typingDiv);
+                this.scrollToBottom();
+                return typingDiv;
+            },
+
+            // Hide Typing
+            hideTyping(element) {
+                this.isTyping = false;
+                element.remove();
+            },
+
+            // Scroll to Bottom
+            scrollToBottom() {
+                this.messagesArea.scrollTop = this.messagesArea.scrollHeight;
+            },
+
+            // Clear Chat
+            clearChat() {
+                if (confirm('Are you sure you want to clear the chat?')) {
+                    this.messagesArea.innerHTML = '';
+                    this.showWelcomeMessage();
+                }
+            },
+
+            // Welcome Message
+            showWelcomeMessage() {
+                setTimeout(() => {
+                    const welcomeText = `Hello! I am Prakash AI, your intelligent portfolio assistant.\n\nI can help you learn about:\n- My MERN Stack Projects\n- Technical Skills and Expertise\n- Professional Experience\n- Education and Certifications\n- Contact Information\n- Current Availability\n\nFeel free to ask me anything or use voice input by clicking the microphone button!`;
+                    this.addMessage(welcomeText, 'assistant');
+                    this.speak(welcomeText);
+                }, 500);
+            }
+        };
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            BixbyAI.init();
+        });
+    </script>
+</body>
+</html>
     
-<!-- Icons & Fonts -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
-
-<style>
-:root {
-  --primary: #4f46e5;
-  --gradient: linear-gradient(135deg,#6366f1,#8b5cf6);
-  --glass: rgba(255,255,255,0.95);
-  --text: #1e293b;
-  --shadow: 0 12px 40px rgba(0,0,0,.25);
-}
-
-#ai-widget-btn {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  width: 60px;
-  height: 60px;
-  background: var(--gradient);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 20px rgba(79,70,229,.5);
-  z-index: 2147483647;
-}
-#ai-widget-btn i { color:white;font-size:26px }
-
-#ai-widget-window {
-  position: fixed;
-  bottom: 100px;
-  right: 25px;
-  width: 380px;
-  height: 600px;
-  max-height: 85vh;
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  border-radius: 22px;
-  box-shadow: var(--shadow);
-  display: none;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 2147483647;
-  font-family: 'Outfit', sans-serif;
-  animation: slideUp .25s ease;
-}
-
-@keyframes slideUp {
-  from { transform: translateY(30px) scale(.95); opacity:0 }
-  to { transform: translateY(0) scale(1); opacity:1 }
-}
-
-#ai-header {
-  padding: 16px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid rgba(0,0,0,.05);
-}
-
-.ai-title {
-  font-weight:600;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-.ai-dot {
-  width:7px;height:7px;
-  background:#10b981;
-  border-radius:50%;
-}
-
-#ai-feed {
-  flex:1;
-  padding:14px;
-  overflow-y:auto;
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-  background:#f8fafc;
-}
-
-.ai-msg {
-  max-width:85%;
-  font-size:14px;
-}
-.ai-user { align-self:flex-end }
-.ai-bot { align-self:flex-start }
-
-.ai-bubble {
-  padding:12px 16px;
-  border-radius:18px;
-}
-.ai-user .ai-bubble {
-  background: var(--gradient);
-  color:white;
-  border-bottom-right-radius:4px;
-}
-.ai-bot .ai-bubble {
-  background:white;
-  border:1px solid rgba(0,0,0,.05);
-  border-bottom-left-radius:4px;
-}
-
-.ai-time {
-  font-size:10px;
-  color:#94a3b8;
-  margin-top:4px;
-}
-
-#ai-controls {
-  padding:12px;
-  border-top:1px solid rgba(0,0,0,.05);
-  background:white;
-}
-
-#ai-lang {
-  width:100%;
-  font-size:12px;
-  padding:6px;
-  margin-bottom:8px;
-}
-
-.ai-input {
-  display:flex;
-  align-items:center;
-  background:#f1f5f9;
-  border-radius:20px;
-  padding:6px 8px;
-}
-.ai-input input {
-  flex:1;
-  border:none;
-  background:transparent;
-  outline:none;
-}
-.ai-btn {
-  border:none;
-  background:none;
-  font-size:16px;
-  cursor:pointer;
-}
-
-@media(max-width:480px){
-  #ai-widget-window{
-    width:100%;
-    height:100%;
-    bottom:0;
-    right:0;
-    border-radius:0;
-  }
-}
-</style>
-
-<div id="ai-widget-btn" onclick="toggleAI()">
-  <i class="fas fa-comment-dots"></i>
-</div>
-
-<div id="ai-widget-window">
-  <div id="ai-header">
-    <div class="ai-title">
-      <i class="fas fa-robot"></i> Prakash AI
-      <span class="ai-dot"></span>
-    </div>
-    <button onclick="toggleAI()" class="ai-btn"><i class="fas fa-times"></i></button>
-  </div>
-
-  <div id="ai-feed"></div>
-
-  <div id="ai-controls">
-    <select id="ai-lang">
-      <option value="en-US">English</option>
-      <option value="hi-IN">Hindi</option>
-      <option value="kn-IN">Kannada</option>
-    </select>
-
-    <div class="ai-input">
-      <input id="ai-input" placeholder="Ask something...">
-      <button onclick="startVoice()" class="ai-btn"><i class="fas fa-microphone"></i></button>
-      <button onclick="sendMsg()" class="ai-btn"><i class="fas fa-paper-plane"></i></button>
-    </div>
-  </div>
-</div>
-
-<script>
-const BACKEND = "https://chatbotbackend-donx.onrender.com/chat";
-const feed = document.getElementById("ai-feed");
-const input = document.getElementById("ai-input");
-const lang = document.getElementById("ai-lang");
-
-function toggleAI(){
-  const w = document.getElementById("ai-widget-window");
-  w.style.display = w.style.display === "flex" ? "none" : "flex";
-  if(feed.children.length === 0) addMsg("Hello! How can I help you today?","bot");
-}
-
-function addMsg(text,type){
-  const wrap = document.createElement("div");
-  wrap.className = "ai-msg ai-"+type;
-  wrap.innerHTML = `
-    <div class="ai-bubble">${type==="bot"?DOMPurify.sanitize(marked.parse(text)):text}</div>
-    <div class="ai-time">${new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
-  `;
-  feed.appendChild(wrap);
-  feed.scrollTop = feed.scrollHeight;
-  if(type==="bot") speak(text);
-}
-
-async function sendMsg(){
-  const text = input.value.trim();
-  if(!text) return;
-  addMsg(text,"user");
-  input.value="";
-
-  const res = await fetch(BACKEND,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({message: text + ` (reply in ${lang.value})`})
-  });
-  const data = await res.json();
-  addMsg(data.reply || "Error","bot");
-}
-
-function speak(text){
-  if(!speechSynthesis) return;
-  const u = new SpeechSynthesisUtterance(text.replace(/[#*_`]/g,""));
-  u.lang = lang.value;
-  speechSynthesis.speak(u);
-}
-
-function startVoice(){
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR) return alert("Voice not supported");
-  const r = new SR();
-  r.lang = lang.value;
-  r.onresult = e => { input.value = e.results[0][0].transcript; sendMsg(); };
-  r.start();
-}
-</script>
-
 </body>
 
 </html>
