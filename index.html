@@ -1384,8 +1384,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
         }
 
         /* Bixby Button */
@@ -1419,12 +1418,6 @@
         #bixbyButton i {
             font-size: 32px;
             color: white;
-            animation: iconFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes iconFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
         }
 
         .pulse-ring {
@@ -1457,7 +1450,7 @@
             max-height: 85vh;
             background: white;
             border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
             display: none;
             flex-direction: column;
             z-index: 9999;
@@ -1481,27 +1474,26 @@
             background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
             padding: 20px 24px;
             color: white;
+            border-radius: 24px 24px 0 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: relative;
-            overflow: hidden;
         }
 
         #chatHeader::before {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
             animation: shimmer 3s infinite;
         }
 
         @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .header-left {
@@ -1533,7 +1525,7 @@
 
         .header-info p {
             font-size: 13px;
-            opacity: 0.95;
+            opacity: 0.9;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -1548,8 +1540,8 @@
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.8); }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
         .header-actions {
@@ -1575,7 +1567,7 @@
 
         .header-btn:hover {
             background: rgba(255, 255, 255, 0.35);
-            transform: scale(1.15) rotate(10deg);
+            transform: scale(1.1);
         }
 
         .header-btn.active {
@@ -1583,36 +1575,12 @@
             color: #4D9FEC;
         }
 
-        /* Voice Visualizer in Header */
-        #headerVoiceVisualizer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.3);
-            display: none;
-            overflow: hidden;
-        }
-
-        .voice-progress {
-            height: 100%;
-            background: white;
-            width: 0%;
-            animation: voiceProgress 2s ease-in-out infinite;
-        }
-
-        @keyframes voiceProgress {
-            0%, 100% { width: 0%; }
-            50% { width: 100%; }
-        }
-
         /* Messages Area */
         #messagesArea {
             flex: 1;
             padding: 24px;
             overflow-y: auto;
-            background: linear-gradient(to bottom, #f8fafc 0%, #f1f5f9 100%);
+            background: #F8F9FA;
             scroll-behavior: smooth;
         }
 
@@ -1625,24 +1593,24 @@
         }
 
         #messagesArea::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: #CBD5E1;
             border-radius: 3px;
         }
 
         #messagesArea::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+            background: #94A3B8;
         }
 
         .message {
             display: flex;
-            margin-bottom: 18px;
-            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 16px;
+            animation: fadeIn 0.3s ease-out;
         }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(15px);
+                transform: translateY(10px);
             }
             to {
                 opacity: 1;
@@ -1654,45 +1622,33 @@
             justify-content: flex-end;
         }
 
-        .message-content {
-            max-width: 80%;
-            display: flex;
-            flex-direction: column;
-        }
-
         .message-bubble {
-            padding: 14px 18px;
+            max-width: 75%;
+            padding: 12px 18px;
             border-radius: 18px;
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.5;
             word-wrap: break-word;
             white-space: pre-wrap;
-            position: relative;
         }
 
         .message.user .message-bubble {
-            background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
+            background: #4D9FEC;
             color: white;
             border-bottom-right-radius: 4px;
-            box-shadow: 0 4px 12px rgba(77, 159, 236, 0.3);
         }
 
         .message.assistant .message-bubble {
             background: white;
-            color: #1f2937;
-            border: 1px solid #e5e7eb;
+            color: #1F2937;
+            border: 1px solid #E5E7EB;
             border-bottom-left-radius: 4px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .message-time {
             font-size: 11px;
-            color: #9ca3af;
+            color: #9CA3AF;
             margin-top: 6px;
-            padding: 0 4px;
-        }
-
-        .message.user .message-time {
             text-align: right;
         }
 
@@ -1701,19 +1657,17 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 14px 18px;
+            padding: 12px 18px;
             background: white;
-            border: 1px solid #e5e7eb;
+            border: 1px solid #E5E7EB;
             border-radius: 18px;
             border-bottom-left-radius: 4px;
-            max-width: 80%;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            max-width: 75%;
         }
 
         .typing-text {
             font-size: 14px;
             color: #4D9FEC;
-            font-weight: 500;
         }
 
         .typing-dots {
@@ -1739,42 +1693,39 @@
                 opacity: 0.5;
             }
             40% {
-                transform: scale(1.3);
+                transform: scale(1.2);
                 opacity: 1;
             }
         }
 
-        /* Voice Visualizer Full */
-        #voiceVisualizerFull {
+        /* Voice Visualizer */
+        #voiceVisualizer {
             display: none;
             justify-content: center;
-            align-items: flex-end;
-            gap: 3px;
-            padding: 20px;
+            align-items: center;
+            gap: 4px;
+            padding: 16px;
             background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
-            height: 80px;
         }
 
         .voice-bar {
             width: 4px;
             border-radius: 2px;
             background: white;
-            transition: height 0.1s ease;
+            animation: wave 1.2s ease-in-out infinite;
         }
 
-        .voice-bar.active {
-            animation: wave 0.8s ease-in-out infinite;
-        }
+        .voice-bar:nth-child(1) { height: 20px; animation-delay: 0s; }
+        .voice-bar:nth-child(2) { height: 30px; animation-delay: 0.1s; }
+        .voice-bar:nth-child(3) { height: 40px; animation-delay: 0.2s; }
+        .voice-bar:nth-child(4) { height: 50px; animation-delay: 0.3s; }
+        .voice-bar:nth-child(5) { height: 40px; animation-delay: 0.4s; }
+        .voice-bar:nth-child(6) { height: 30px; animation-delay: 0.5s; }
+        .voice-bar:nth-child(7) { height: 20px; animation-delay: 0.6s; }
 
         @keyframes wave {
-            0%, 100% { 
-                height: 20px;
-                opacity: 0.6;
-            }
-            50% { 
-                height: 50px;
-                opacity: 1;
-            }
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1.2); }
         }
 
         /* Suggestions */
@@ -1784,7 +1735,7 @@
             gap: 8px;
             overflow-x: auto;
             background: white;
-            border-top: 1px solid #f3f4f6;
+            border-top: 1px solid #F3F4F6;
         }
 
         #suggestions::-webkit-scrollbar {
@@ -1792,42 +1743,34 @@
         }
 
         #suggestions::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: #CBD5E1;
             border-radius: 2px;
         }
 
         .suggestion-chip {
-            padding: 10px 16px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 20px;
+            padding: 8px 16px;
+            background: #F1F5F9;
+            border: 1px solid #E2E8F0;
+            border-radius: 16px;
             font-size: 13px;
             color: #475569;
             white-space: nowrap;
             cursor: pointer;
             transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .suggestion-chip:hover {
-            background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
+            background: #4D9FEC;
             color: white;
-            border-color: transparent;
+            border-color: #4D9FEC;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(77, 159, 236, 0.3);
-        }
-
-        .suggestion-chip i {
-            font-size: 12px;
         }
 
         /* Input Area */
         #inputArea {
-            padding: 18px 24px;
+            padding: 16px 24px;
             background: white;
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid #E5E7EB;
             display: flex;
             gap: 12px;
             align-items: center;
@@ -1838,17 +1781,17 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            background: #f9fafb;
-            border: 2px solid #e5e7eb;
-            border-radius: 28px;
-            padding: 12px 18px;
+            background: #F9FAFB;
+            border: 2px solid #E5E7EB;
+            border-radius: 24px;
+            padding: 10px 16px;
             transition: all 0.3s ease;
         }
 
         #inputWrapper:focus-within {
             border-color: #4D9FEC;
             background: white;
-            box-shadow: 0 0 0 4px rgba(77, 159, 236, 0.1);
+            box-shadow: 0 0 0 3px rgba(77, 159, 236, 0.1);
         }
 
         #messageInput {
@@ -1857,17 +1800,17 @@
             outline: none;
             background: transparent;
             font-size: 14px;
-            color: #1f2937;
+            color: #1F2937;
             font-family: inherit;
         }
 
         #messageInput::placeholder {
-            color: #9ca3af;
+            color: #9CA3AF;
         }
 
         #voiceButton {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
             border: none;
             border-radius: 50%;
@@ -1878,48 +1821,26 @@
             justify-content: center;
             transition: all 0.3s ease;
             flex-shrink: 0;
-            position: relative;
         }
 
         #voiceButton:hover {
             transform: scale(1.1);
-            box-shadow: 0 4px 16px rgba(77, 159, 236, 0.4);
+            box-shadow: 0 4px 12px rgba(77, 159, 236, 0.4);
         }
 
         #voiceButton.listening {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            animation: pulsate 1.5s ease-in-out infinite;
+            background: #EF4444;
+            animation: micPulse 1s ease-in-out infinite;
         }
 
-        #voiceButton.listening::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 2px solid #ef4444;
-            border-radius: 50%;
-            animation: ping 1.5s ease-out infinite;
-        }
-
-        @keyframes pulsate {
+        @keyframes micPulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.15); }
         }
 
-        @keyframes ping {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
-        }
-
         #sendButton {
-            width: 46px;
-            height: 46px;
+            width: 44px;
+            height: 44px;
             background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
             border: none;
             border-radius: 50%;
@@ -1930,40 +1851,41 @@
             justify-content: center;
             transition: all 0.3s ease;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(77, 159, 236, 0.3);
         }
 
-        #sendButton:hover {
+        #sendButton:hover:not(:disabled) {
             transform: scale(1.1) rotate(15deg);
-            box-shadow: 0 6px 20px rgba(77, 159, 236, 0.5);
+            box-shadow: 0 4px 12px rgba(77, 159, 236, 0.4);
         }
 
         #sendButton:active {
-            transform: scale(0.95) rotate(15deg);
+            transform: scale(0.95);
+        }
+
+        #sendButton:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         /* Status Messages */
         .status-message {
             text-align: center;
-            padding: 12px;
+            padding: 10px 16px;
             margin: 12px 24px;
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
             border-radius: 12px;
             font-size: 13px;
-            color: #1e40af;
             animation: fadeIn 0.3s ease;
         }
 
         .status-message.error {
-            background: #fef2f2;
-            border-color: #fecaca;
-            color: #991b1b;
+            background: #FEF2F2;
+            border: 1px solid #FCA5A5;
+            color: #991B1B;
         }
 
         .status-message.success {
-            background: #f0fdf4;
-            border-color: #bbf7d0;
+            background: #F0FDF4;
+            border: 1px solid #BBF7D0;
             color: #166534;
         }
 
@@ -1982,8 +1904,8 @@
             #bixbyButton {
                 bottom: 20px;
                 right: 20px;
-                width: 65px;
-                height: 65px;
+                width: 60px;
+                height: 60px;
             }
 
             #bixbyButton i {
@@ -1993,31 +1915,12 @@
             #chatHeader {
                 border-radius: 0;
             }
-
-            .message-bubble {
-                max-width: 85%;
-            }
-        }
-
-        /* Accessibility */
-        button:focus {
-            outline: 2px solid #4D9FEC;
-            outline-offset: 2px;
-        }
-
-        /* Loading Animation */
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .loading {
-            animation: spin 1s linear infinite;
         }
     </style>
 </head>
 <body>
     <!-- Bixby Button -->
-    <div id="bixbyButton" title="Open Prakash AI Assistant">
+    <div id="bixbyButton" title="Open Prakash AI">
         <div class="pulse-ring"></div>
         <i class="fas fa-comment-dots"></i>
     </div>
@@ -2037,26 +1940,20 @@
                 </div>
             </div>
             <div class="header-actions">
-                <button id="voiceToggle" class="header-btn" title="Toggle Voice Output">
+                <button id="voiceToggle" class="header-btn" title="Voice ON/OFF">
                     <i class="fas fa-volume-mute"></i>
                 </button>
-                <button class="header-btn" onclick="BixbyAI.clearChat()" title="Clear Chat">
+                <button class="header-btn" onclick="BixbyAI.clearChat()" title="Clear">
                     <i class="fas fa-trash-alt"></i>
                 </button>
-                <button class="header-btn" onclick="BixbyAI.close()" title="Close Chat">
+                <button class="header-btn" onclick="BixbyAI.close()" title="Close">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div id="headerVoiceVisualizer">
-                <div class="voice-progress"></div>
-            </div>
         </div>
 
-        <!-- Voice Visualizer Full -->
-        <div id="voiceVisualizerFull">
-            <div class="voice-bar"></div>
-            <div class="voice-bar"></div>
-            <div class="voice-bar"></div>
+        <!-- Voice Visualizer -->
+        <div id="voiceVisualizer">
             <div class="voice-bar"></div>
             <div class="voice-bar"></div>
             <div class="voice-bar"></div>
@@ -2069,24 +1966,19 @@
         <!-- Suggestions -->
         <div id="suggestions">
             <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('Tell me about your projects')">
-                <i class="fas fa-code"></i>
-                <span>Projects</span>
+                Projects
             </div>
             <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('What are your skills?')">
-                <i class="fas fa-cogs"></i>
-                <span>Skills</span>
+                Skills
             </div>
             <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('Your experience?')">
-                <i class="fas fa-briefcase"></i>
-                <span>Experience</span>
+                Experience
             </div>
             <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('Contact information?')">
-                <i class="fas fa-envelope"></i>
-                <span>Contact</span>
+                Contact
             </div>
             <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('Are you available?')">
-                <i class="fas fa-calendar-check"></i>
-                <span>Availability</span>
+                Availability
             </div>
         </div>
 
@@ -2101,13 +1993,12 @@
                     id="messageInput" 
                     placeholder="Ask about projects, skills, experience..."
                     autocomplete="off"
-                    aria-label="Message input"
                 >
-                <button id="voiceButton" title="Voice Input (Click to speak)" aria-label="Voice input">
+                <button id="voiceButton" title="Voice Input">
                     <i class="fas fa-microphone"></i>
                 </button>
             </div>
-            <button id="sendButton" title="Send message" aria-label="Send">
+            <button id="sendButton" title="Send">
                 <i class="fas fa-paper-plane"></i>
             </button>
         </div>
@@ -2115,6 +2006,9 @@
 
     <script>
         const BixbyAI = {
+            // Backend API Configuration
+            API_URL: 'https://chatbotbackend-donx.onrender.com',
+            
             // Elements
             button: null,
             chat: null,
@@ -2122,8 +2016,7 @@
             input: null,
             voiceButton: null,
             voiceToggle: null,
-            voiceVisualizerFull: null,
-            headerVoiceVisualizer: null,
+            voiceVisualizer: null,
             sendButton: null,
 
             // State
@@ -2131,77 +2024,12 @@
             isTyping: false,
             voiceEnabled: false,
             isListening: false,
-            isSpeaking: false,
             recognition: null,
             synthesis: window.speechSynthesis,
-            voices: [],
-
-            // Portfolio Data
-            data: {
-                name: "Prakash",
-                role: "Junior Full Stack Developer",
-                email: "prakashtare181@gmail.com",
-                phone: "+91 8050458999",
-                location: "Bidar, Karnataka, India",
-                website: "prakash-v181.github.io/resume-prakash/",
-                github: "github.com/prakash-v181",
-                linkedin: "linkedin.com/in/prakash181gupta/",
-                
-                skills: [
-                    "React.js", "Node.js", "MongoDB", "Express.js", "Next.js",
-                    "JavaScript ES6+", "HTML5", "CSS3", "Redux", "Tailwind CSS",
-                    "Material UI", "Bootstrap", "Git", "GitHub", "AWS",
-                    "Vercel", "REST APIs", "JWT Authentication", "MySQL",
-                    "Firebase", "Docker", "Postman"
-                ],
-                
-                projects: [
-                    {
-                        name: "Zerodha Clone",
-                        description: "Full-stack trading application with React, Node.js, MongoDB and JWT authentication. Features include real-time data, user portfolio management, and secure transactions.",
-                        tech: "React, Node.js, MongoDB, Express, JWT",
-                        status: "Live and Deployed"
-                    },
-                    {
-                        name: "Facebook Clone",
-                        description: "Social media platform with Firebase authentication, real-time posts, likes, comments, and AWS deployment. Includes Google login integration.",
-                        tech: "React, Firebase, AWS Amplify, Tailwind CSS",
-                        status: "Live and Deployed"
-                    },
-                    {
-                        name: "BharatMart E-Commerce",
-                        description: "Complete e-commerce platform with Razorpay payment integration, product management, shopping cart, and order tracking.",
-                        tech: "MERN Stack, Razorpay, Vercel",
-                        status: "Live and Deployed"
-                    },
-                    {
-                        name: "SangvichatGPT",
-                        description: "AI conversational web application with REST API integration, dynamic state management, and ChatGPT-like interface.",
-                        tech: "React, REST APIs, Redux",
-                        status: "Live and Deployed"
-                    },
-                    {
-                        name: "Airbnb Clone",
-                        description: "Property listing platform with full CRUD operations, search filters, and booking management system.",
-                        tech: "MERN Stack, REST APIs",
-                        status: "Live and Deployed"
-                    },
-                    {
-                        name: "Namma Video Calling Application",
-                        description: "Real-time peer-to-peer audio and video communication platform using WebRTC technology.",
-                        tech: "React, WebRTC",
-                        status: "Live and Deployed"
-                    }
-                ],
-                
-                experience: "1 years of hands-on experience in MERN stack development with expertise in building production-ready, scalable web applications. Worked on multiple real-world projects deployed on cloud platforms.",
-                education: "Bachelor of Engineering in Computer Science and Engineering from VTU with CGPA 8.1. Strong foundation in Data Structures, Algorithms, DBMS, and Operating Systems.",
-                availability: "Available immediately for Full Stack Developer positions. Currently preparing for BEL, SSC CGL, and KPSC while actively developing projects."
-            },
 
             // Initialize
             init() {
-                console.log('Initializing Bixby AI...');
+                console.log('Initializing Bixby AI with backend:', this.API_URL);
                 
                 this.button = document.getElementById('bixbyButton');
                 this.chat = document.getElementById('bixbyChat');
@@ -2209,113 +2037,42 @@
                 this.input = document.getElementById('messageInput');
                 this.voiceButton = document.getElementById('voiceButton');
                 this.voiceToggle = document.getElementById('voiceToggle');
-                this.voiceVisualizerFull = document.getElementById('voiceVisualizerFull');
-                this.headerVoiceVisualizer = document.getElementById('headerVoiceVisualizer');
+                this.voiceVisualizer = document.getElementById('voiceVisualizer');
                 this.sendButton = document.getElementById('sendButton');
 
-                this.loadVoices();
                 this.setupSpeechRecognition();
                 this.attachEvents();
-                
-                console.log('Bixby AI initialized successfully');
-            },
-
-            // Load Voices
-            loadVoices() {
-                if (this.synthesis) {
-                    this.voices = this.synthesis.getVoices();
-                    
-                    if (this.voices.length === 0) {
-                        this.synthesis.onvoiceschanged = () => {
-                            this.voices = this.synthesis.getVoices();
-                            console.log('Voices loaded:', this.voices.length);
-                        };
-                    }
-                }
             },
 
             // Setup Speech Recognition
             setupSpeechRecognition() {
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                
                 if (SpeechRecognition) {
                     this.recognition = new SpeechRecognition();
                     this.recognition.continuous = false;
                     this.recognition.interimResults = false;
                     this.recognition.lang = 'en-US';
-                    this.recognition.maxAlternatives = 1;
 
                     this.recognition.onstart = () => {
-                        console.log('Speech recognition started');
                         this.isListening = true;
                         this.voiceButton.classList.add('listening');
-                        this.voiceVisualizerFull.style.display = 'flex';
-                        this.animateVoiceBars(true);
-                        this.showStatusMessage('Listening... Speak now', 'success');
+                        this.voiceVisualizer.style.display = 'flex';
                     };
 
                     this.recognition.onresult = (event) => {
                         const transcript = event.results[0][0].transcript;
-                        const confidence = event.results[0][0].confidence;
-                        console.log('Speech recognized:', transcript, 'Confidence:', confidence);
-                        
                         this.input.value = transcript;
-                        this.showStatusMessage('Got it! Sending message...', 'success');
-                        
-                        setTimeout(() => {
-                            this.sendMessage();
-                        }, 500);
+                        setTimeout(() => this.sendMessage(), 300);
                     };
 
-                    this.recognition.onerror = (event) => {
-                        console.error('Speech recognition error:', event.error);
+                    this.recognition.onerror = () => {
                         this.stopListening();
-                        
-                        let errorMessage = 'Voice input error. ';
-                        switch(event.error) {
-                            case 'no-speech':
-                                errorMessage += 'No speech detected. Please try again.';
-                                break;
-                            case 'audio-capture':
-                                errorMessage += 'Microphone not found.';
-                                break;
-                            case 'not-allowed':
-                                errorMessage += 'Microphone permission denied.';
-                                break;
-                            case 'network':
-                                errorMessage += 'Network error occurred.';
-                                break;
-                            default:
-                                errorMessage += 'Please try again.';
-                        }
-                        
-                        this.showStatusMessage(errorMessage, 'error');
                     };
 
                     this.recognition.onend = () => {
-                        console.log('Speech recognition ended');
                         this.stopListening();
                     };
-
-                    console.log('Speech recognition setup complete');
-                } else {
-                    console.warn('Speech recognition not supported in this browser');
                 }
-            },
-
-            // Animate Voice Bars
-            animateVoiceBars(active) {
-                const bars = this.voiceVisualizerFull.querySelectorAll('.voice-bar');
-                bars.forEach((bar, index) => {
-                    if (active) {
-                        bar.classList.add('active');
-                        bar.style.height = (20 + Math.random() * 30) + 'px';
-                        bar.style.animationDelay = (index * 0.1) + 's';
-                    } else {
-                        bar.classList.remove('active');
-                        bar.style.height = '20px';
-                    }
-                });
             },
 
             // Attach Events
@@ -2326,56 +2083,23 @@
                 this.voiceToggle.onclick = () => this.toggleVoiceOutput();
 
                 this.input.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
+                    if (e.key === 'Enter') {
                         e.preventDefault();
                         this.sendMessage();
                     }
                 });
 
                 document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && this.isOpen) {
-                        this.close();
-                    }
-                });
-
-                // Focus input when clicking in chat area
-                this.messagesArea.addEventListener('click', () => {
-                    if (!window.getSelection().toString()) {
-                        this.input.focus();
-                    }
+                    if (e.key === 'Escape' && this.isOpen) this.close();
                 });
             },
 
-            // Show Status Message
-            showStatusMessage(message, type = 'info') {
-                const existingStatus = this.messagesArea.querySelector('.status-message');
-                if (existingStatus) {
-                    existingStatus.remove();
-                }
-
-                const statusDiv = document.createElement('div');
-                statusDiv.className = `status-message ${type}`;
-                statusDiv.textContent = message;
-                this.messagesArea.appendChild(statusDiv);
-                this.scrollToBottom();
-
-                setTimeout(() => {
-                    if (statusDiv.parentNode) {
-                        statusDiv.remove();
-                    }
-                }, 3000);
-            },
-
-            // Toggle Chat
+            // Toggle
             toggle() {
-                if (this.isOpen) {
-                    this.close();
-                } else {
-                    this.open();
-                }
+                this.isOpen ? this.close() : this.open();
             },
 
-            // Open Chat
+            // Open
             open() {
                 this.chat.style.display = 'flex';
                 this.button.style.display = 'none';
@@ -2383,60 +2107,35 @@
                 setTimeout(() => {
                     this.input.focus();
                     if (this.messagesArea.children.length === 0) {
-                        this.showWelcomeMessage();
+                        this.showWelcome();
                     }
                 }, 300);
             },
 
-            // Close Chat
+            // Close
             close() {
                 this.chat.style.display = 'none';
                 this.button.style.display = 'flex';
                 this.isOpen = false;
                 this.stopListening();
-                this.stopSpeaking();
+                if (this.synthesis) this.synthesis.cancel();
             },
 
             // Toggle Voice Input
             toggleVoiceInput() {
                 if (!this.recognition) {
-                    this.showStatusMessage('Voice input is not supported in your browser. Please use Chrome, Edge, or Safari.', 'error');
+                    this.showStatus('Voice not supported in this browser', 'error');
                     return;
                 }
-
-                if (this.isListening) {
-                    this.stopListening();
-                } else {
-                    this.startListening();
-                }
+                this.isListening ? this.stopListening() : this.startListening();
             },
 
             // Start Listening
             startListening() {
-                if (!this.recognition) return;
-
-                // Check for microphone permission
-                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                    navigator.mediaDevices.getUserMedia({ audio: true })
-                        .then(() => {
-                            try {
-                                this.recognition.start();
-                            } catch (error) {
-                                console.error('Error starting recognition:', error);
-                                this.showStatusMessage('Could not start voice input. Please try again.', 'error');
-                            }
-                        })
-                        .catch((error) => {
-                            console.error('Microphone permission denied:', error);
-                            this.showStatusMessage('Microphone access denied. Please enable it in browser settings.', 'error');
-                        });
-                } else {
-                    try {
-                        this.recognition.start();
-                    } catch (error) {
-                        console.error('Error starting recognition:', error);
-                        this.showStatusMessage('Could not start voice input. Please try again.', 'error');
-                    }
+                try {
+                    this.recognition.start();
+                } catch (error) {
+                    console.error(error);
                 }
             },
 
@@ -2444,15 +2143,11 @@
             stopListening() {
                 this.isListening = false;
                 this.voiceButton.classList.remove('listening');
-                this.voiceVisualizerFull.style.display = 'none';
-                this.animateVoiceBars(false);
-                
+                this.voiceVisualizer.style.display = 'none';
                 if (this.recognition) {
                     try {
                         this.recognition.stop();
-                    } catch (error) {
-                        console.error('Error stopping recognition:', error);
-                    }
+                    } catch (error) {}
                 }
             },
 
@@ -2463,165 +2158,129 @@
                 this.voiceToggle.innerHTML = this.voiceEnabled ?
                     '<i class="fas fa-volume-up"></i>' :
                     '<i class="fas fa-volume-mute"></i>';
-
-                if (this.voiceEnabled) {
-                    this.showStatusMessage('Voice output enabled', 'success');
-                } else {
-                    this.stopSpeaking();
-                    this.showStatusMessage('Voice output disabled', 'info');
+                if (!this.voiceEnabled && this.synthesis) {
+                    this.synthesis.cancel();
                 }
             },
 
             // Speak
             speak(text) {
                 if (!this.voiceEnabled || !this.synthesis) return;
-
-                this.stopSpeaking();
-
-                // Clean text for speech (remove extra formatting)
-                const cleanText = text.replace(/\n+/g, '. ').substring(0, 300);
-                
-                const utterance = new SpeechSynthesisUtterance(cleanText);
-                
-                // Try to find a good English voice
-                const preferredVoice = this.voices.find(voice => 
-                    voice.lang.startsWith('en') && (voice.name.includes('Google') || voice.name.includes('Microsoft'))
-                ) || this.voices.find(voice => voice.lang.startsWith('en'));
-                
-                if (preferredVoice) {
-                    utterance.voice = preferredVoice;
-                }
-                
+                this.synthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text.substring(0, 300));
                 utterance.lang = 'en-US';
                 utterance.rate = 0.95;
-                utterance.pitch = 1.0;
-                utterance.volume = 1.0;
-
-                utterance.onstart = () => {
-                    this.isSpeaking = true;
-                    this.headerVoiceVisualizer.style.display = 'block';
-                };
-
-                utterance.onend = () => {
-                    this.isSpeaking = false;
-                    this.headerVoiceVisualizer.style.display = 'none';
-                };
-
-                utterance.onerror = (error) => {
-                    console.error('Speech synthesis error:', error);
-                    this.isSpeaking = false;
-                    this.headerVoiceVisualizer.style.display = 'none';
-                };
-
                 this.synthesis.speak(utterance);
             },
 
-            // Stop Speaking
-            stopSpeaking() {
-                if (this.synthesis) {
-                    this.synthesis.cancel();
-                    this.isSpeaking = false;
-                    this.headerVoiceVisualizer.style.display = 'none';
-                }
-            },
+            // Show Status
+            showStatus(message, type = 'error') {
+                const existing = this.messagesArea.querySelector('.status-message');
+                if (existing) existing.remove();
 
-            // Send Message
-            sendMessage() {
-                const text = this.input.value.trim();
-                if (!text || this.isTyping) return;
+                const status = document.createElement('div');
+                status.className = `status-message ${type}`;
+                status.textContent = message;
+                this.messagesArea.appendChild(status);
+                this.scrollToBottom();
 
-                this.addMessage(text, 'user');
-                this.input.value = '';
-
-                const typingIndicator = this.showTyping();
-                
                 setTimeout(() => {
-                    this.hideTyping(typingIndicator);
-                    const response = this.generateResponse(text.toLowerCase());
-                    this.addMessage(response, 'assistant');
-                    this.speak(response);
-                }, 800 + Math.random() * 700);
+                    if (status.parentNode) status.remove();
+                }, 3000);
             },
 
             // Use Suggestion
             useSuggestion(text) {
                 this.input.value = text;
-                this.input.focus();
-                setTimeout(() => this.sendMessage(), 100);
+                this.sendMessage();
             },
 
-            // Generate Response
-            generateResponse(query) {
-                // Projects
-                if (query.includes('project')) {
-                    let response = `I have built ${this.data.projects.length} production-ready MERN stack projects:\n\n`;
-                    this.data.projects.forEach((project, index) => {
-                        response += `${index + 1}. ${project.name}\n${project.description}\nTech Stack: ${project.tech}\nStatus: ${project.status}\n\n`;
-                    });
-                    return response.trim();
-                }
+            // Send Message
+            async sendMessage() {
+                const text = this.input.value.trim();
+                if (!text || this.isTyping) return;
 
-                // Skills
-                if (query.includes('skill') || query.includes('technology') || query.includes('tech')) {
-                    const skillCategories = {
-                        'Frontend': this.data.skills.slice(0, 10),
-                        'Backend': ['Node.js', 'Express.js', 'MongoDB', 'REST APIs', 'JWT'],
-                        'Tools & Cloud': ['Git', 'GitHub', 'AWS', 'Vercel', 'Docker', 'Postman']
-                    };
+                this.addMessage(text, 'user');
+                this.input.value = '';
+                this.sendButton.disabled = true;
+
+                const typingIndicator = this.showTyping();
+
+                try {
+                    console.log('Sending to backend:', text);
                     
-                    let response = 'My Technical Skills:\n\n';
-                    for (const [category, skills] of Object.entries(skillCategories)) {
-                        response += `${category}: ${skills.join(', ')}\n\n`;
+                    const response = await fetch(`${this.API_URL}/chat`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: text
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API Error: ${response.status}`);
                     }
-                    return response + this.data.experience;
+
+                    const data = await response.json();
+                    console.log('Backend response:', data);
+                    
+                    this.hideTyping(typingIndicator);
+                    
+                    const aiResponse = data.response || data.message || data.reply || 'Sorry, could not generate response.';
+                    this.addMessage(aiResponse, 'assistant');
+                    this.speak(aiResponse);
+                    
+                } catch (error) {
+                    console.error('Backend API Error:', error);
+                    this.hideTyping(typingIndicator);
+                    this.showStatus('Connection error. Using offline mode.', 'error');
+                    
+                    // Fallback response
+                    const fallback = this.getFallbackResponse(text);
+                    this.addMessage(fallback, 'assistant');
+                    this.speak(fallback);
                 }
 
-                // Experience
-                if (query.includes('experience') || query.includes('work')) {
-                    return `${this.data.experience}\n\nI have successfully delivered multiple full-stack applications including:\n- Trading platforms\n- Social media applications\n- E-commerce websites\n- Real-time communication tools\n\nAll projects are deployed on cloud platforms and actively maintained.`;
-                }
+                this.sendButton.disabled = false;
+            },
 
-                // Education
-                if (query.includes('education') || query.includes('degree') || query.includes('college') || query.includes('study')) {
-                    return this.data.education;
+            // Fallback Response
+            getFallbackResponse(query) {
+                const q = query.toLowerCase();
+                
+                if (q.includes('project')) {
+                    return "I have built 9+ production-ready projects:\n\n1. Zerodha Clone - Full-stack trading app\n2. BharatMart - E-commerce with Razorpay\n3. Facebook Clone - Social media platform\n4. SangvichatGPT - ChatGPT clone\n5. Airbnb Clone - Property listing\n\nAll are live! Check github.com/prakash-v181";
                 }
-
-                // Contact
-                if (query.includes('contact') || query.includes('email') || query.includes('phone') || query.includes('reach')) {
-                    return `You can contact me through:\n\nEmail: ${this.data.email}\nPhone: ${this.data.phone}\nLocation: ${this.data.location}\n\nProfessional Links:\nLinkedIn: ${this.data.linkedin}\nGitHub: ${this.data.github}\nPortfolio: ${this.data.website}\n\nFeel free to reach out for collaborations or opportunities!`;
+                
+                if (q.includes('skill') || q.includes('tech')) {
+                    return "My technical skills:\n\nFrontend: React.js, Next.js, Redux, Tailwind CSS\nBackend: Node.js, Express.js, MongoDB\nCloud: AWS, Vercel, GitHub Pages\nTools: Git, VS Code, Postman\n\n3+ years of MERN stack experience!";
                 }
-
-                // Availability
-                if (query.includes('available') || query.includes('hire') || query.includes('join') || query.includes('start')) {
-                    return `${this.data.availability}\n\nI am actively seeking Full Stack Developer positions where I can contribute my MERN stack expertise and continue growing as a developer. I can join immediately and relocate if needed.`;
+                
+                if (q.includes('contact') || q.includes('email')) {
+                    return "Contact me:\n\nEmail: prakashtare181@gmail.com\nPhone: +91 8050458999\nLocation: Bidar, Karnataka, India\n\nLinkedIn: linkedin.com/in/prakash181gupta/\nGitHub: github.com/prakash-v181\nPortfolio: prakash-v181.github.io/resume-prakash/";
                 }
-
-                // GitHub
-                if (query.includes('github') || query.includes('code') || query.includes('repository')) {
-                    return `Visit my GitHub profile at ${this.data.github}\n\nYou will find all my projects with complete source code, documentation, and live deployment links. I regularly contribute to open source and maintain clean, well-documented code.`;
+                
+                if (q.includes('experience')) {
+                    return "I have 1 years of hands-on MERN stack development experience. Built and deployed 9+ production applications. Worked as an intern at Main Flow Services & Technologies.";
                 }
-
-                // Portfolio
-                if (query.includes('website') || query.includes('portfolio')) {
-                    return `Check out my complete portfolio at ${this.data.website}\n\nMy portfolio showcases all my projects with live demos, detailed case studies, technical skills, work experience, and contact information. It is built with modern web technologies and optimized for all devices.`;
+                
+                if (q.includes('education')) {
+                    return "BE Computer Science & Engineering from VTU with CGPA 8.1. Strong foundation in DBMS, Operating Systems, Computer Networks, and Data Structures.";
                 }
-
-                // Resume
-                if (query.includes('resume') || query.includes('cv')) {
-                    return `My resume highlights:\n\n- ${this.data.role}\n- ${this.data.experience}\n- ${this.data.education}\n- ${this.data.projects.length}+ Production Projects\n- ${this.data.skills.length}+ Technical Skills\n\nVisit ${this.data.website} to download my complete resume or view my detailed portfolio.`;
+                
+                if (q.includes('available') || q.includes('hire')) {
+                    return "Yes! I am available immediately for Full Stack Developer positions. Ready to join and open to relocation. Contact: prakashtare181@gmail.com";
                 }
-
-                // Default Response
-                return `Hello! I am ${this.data.name}, a ${this.data.role} with ${this.data.experience}\n\nI can help you learn about:\n\n- My MERN Stack Projects (${this.data.projects.length}+ live applications)\n- Technical Skills and Expertise\n- Professional Experience\n- Education and Qualifications\n- Contact Information\n- Current Availability\n\nWhat would you like to know? You can type your question or use the voice input button to speak!`;
+                
+                return "Hello! I'm Prakash, a Junior Full Stack Developer with 3+ years of MERN experience and 9+ live projects.\n\nAsk me about:\n- My Projects\n- Technical Skills\n- Work Experience\n- Education\n- Contact Information\n- Availability";
             },
 
             // Add Message
             addMessage(text, type) {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${type}`;
-
-                const contentDiv = document.createElement('div');
-                contentDiv.className = 'message-content';
+                const message = document.createElement('div');
+                message.className = `message ${type}`;
 
                 const bubble = document.createElement('div');
                 bubble.className = 'message-bubble';
@@ -2634,20 +2293,21 @@
                     minute: '2-digit'
                 });
 
-                contentDiv.appendChild(bubble);
-                contentDiv.appendChild(time);
-                messageDiv.appendChild(contentDiv);
+                message.appendChild(bubble);
+                if (type === 'user') {
+                    message.appendChild(time);
+                }
 
-                this.messagesArea.appendChild(messageDiv);
+                this.messagesArea.appendChild(message);
                 this.scrollToBottom();
             },
 
             // Show Typing
             showTyping() {
                 this.isTyping = true;
-                const typingDiv = document.createElement('div');
-                typingDiv.className = 'message assistant';
-                typingDiv.innerHTML = `
+                const typing = document.createElement('div');
+                typing.className = 'message assistant';
+                typing.innerHTML = `
                     <div class="typing-indicator">
                         <span class="typing-text">Prakash AI is thinking</span>
                         <div class="typing-dots">
@@ -2657,9 +2317,9 @@
                         </div>
                     </div>
                 `;
-                this.messagesArea.appendChild(typingDiv);
+                this.messagesArea.appendChild(typing);
                 this.scrollToBottom();
-                return typingDiv;
+                return typing;
             },
 
             // Hide Typing
@@ -2679,48 +2339,28 @@
 
             // Clear Chat
             clearChat() {
-                if (confirm('Are you sure you want to clear the conversation? This cannot be undone.')) {
+                if (confirm('Clear conversation?')) {
                     this.messagesArea.innerHTML = '';
-                    this.showWelcomeMessage();
-                    this.showStatusMessage('Chat cleared', 'info');
+                    this.showWelcome();
                 }
             },
 
             // Welcome Message
-            showWelcomeMessage() {
+            showWelcome() {
                 setTimeout(() => {
-                    const welcomeText = `Hello! I am Prakash AI, your intelligent portfolio assistant.\n\nI can provide detailed information about:\n\n- MERN Stack Projects (${this.data.projects.length}+ live applications)\n- Technical Skills and Technologies\n- Professional Experience (3+ years)\n- Education and Qualifications\n- Contact Details and Availability\n\nYou can type your questions or click the microphone button for voice input. Try asking "Tell me about your projects" or use the suggestion chips above!`;
-                    
-                    this.addMessage(welcomeText, 'assistant');
-                    
-                    if (this.voiceEnabled) {
-                        this.speak(welcomeText);
-                    }
-                }, 600);
+                    const welcome = "Hello! I'm Prakash AI, your intelligent portfolio assistant.\n\nI can provide information about:\n- MERN Stack Projects\n- Technical Skills\n- Work Experience\n- Education\n- Contact Details\n\nFeel free to ask me anything!";
+                    this.addMessage(welcome, 'assistant');
+                    this.speak(welcome);
+                }, 500);
             }
         };
 
-        // Initialize when DOM is ready
+        // Initialize
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                BixbyAI.init();
-            });
+            document.addEventListener('DOMContentLoaded', () => BixbyAI.init());
         } else {
             BixbyAI.init();
         }
-
-        // Handle page visibility changes
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                BixbyAI.stopListening();
-                BixbyAI.stopSpeaking();
-            }
-        });
-
-        // Log when page is fully loaded
-        window.addEventListener('load', () => {
-            console.log('Page fully loaded - Bixby AI ready');
-        });
     </script>
 </body>
 </html>
