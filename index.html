@@ -1368,14 +1368,13 @@
 
     <!-- chatbot AI -->
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prakash AI Assistant</title>
-    <link href="https://fonts.googleapis.com/css2?family=Samsung+Sharp+Sans:wght@400;500;600;700&family=Samsung+One:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -1385,7 +1384,8 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow-x: hidden;
         }
 
         /* Bixby Button */
@@ -1419,6 +1419,12 @@
         #bixbyButton i {
             font-size: 32px;
             color: white;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         .pulse-ring {
@@ -1446,12 +1452,12 @@
             position: fixed;
             bottom: 110px;
             right: 30px;
-            width: 400px;
-            height: 600px;
-            max-height: 80vh;
+            width: 420px;
+            height: 650px;
+            max-height: 85vh;
             background: white;
             border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
             display: none;
             flex-direction: column;
             z-index: 9999;
@@ -1475,16 +1481,34 @@
             background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
             padding: 20px 24px;
             color: white;
-            border-radius: 24px 24px 0 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #chatHeader::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
 
         .header-left {
             display: flex;
             align-items: center;
             gap: 14px;
+            z-index: 1;
         }
 
         .avatar {
@@ -1509,7 +1533,7 @@
 
         .header-info p {
             font-size: 13px;
-            opacity: 0.9;
+            opacity: 0.95;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -1524,13 +1548,14 @@
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
         }
 
         .header-actions {
             display: flex;
             gap: 8px;
+            z-index: 1;
         }
 
         .header-btn {
@@ -1550,7 +1575,7 @@
 
         .header-btn:hover {
             background: rgba(255, 255, 255, 0.35);
-            transform: scale(1.1);
+            transform: scale(1.15) rotate(10deg);
         }
 
         .header-btn.active {
@@ -1558,12 +1583,36 @@
             color: #4D9FEC;
         }
 
+        /* Voice Visualizer in Header */
+        #headerVoiceVisualizer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            display: none;
+            overflow: hidden;
+        }
+
+        .voice-progress {
+            height: 100%;
+            background: white;
+            width: 0%;
+            animation: voiceProgress 2s ease-in-out infinite;
+        }
+
+        @keyframes voiceProgress {
+            0%, 100% { width: 0%; }
+            50% { width: 100%; }
+        }
+
         /* Messages Area */
         #messagesArea {
             flex: 1;
             padding: 24px;
             overflow-y: auto;
-            background: #F8F9FA;
+            background: linear-gradient(to bottom, #f8fafc 0%, #f1f5f9 100%);
             scroll-behavior: smooth;
         }
 
@@ -1576,24 +1625,24 @@
         }
 
         #messagesArea::-webkit-scrollbar-thumb {
-            background: #CBD5E1;
+            background: #cbd5e1;
             border-radius: 3px;
         }
 
         #messagesArea::-webkit-scrollbar-thumb:hover {
-            background: #94A3B8;
+            background: #94a3b8;
         }
 
         .message {
             display: flex;
-            margin-bottom: 16px;
-            animation: fadeIn 0.3s ease-out;
+            margin-bottom: 18px;
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(15px);
             }
             to {
                 opacity: 1;
@@ -1605,33 +1654,45 @@
             justify-content: flex-end;
         }
 
+        .message-content {
+            max-width: 80%;
+            display: flex;
+            flex-direction: column;
+        }
+
         .message-bubble {
-            max-width: 75%;
-            padding: 12px 18px;
+            padding: 14px 18px;
             border-radius: 18px;
             font-size: 14px;
-            line-height: 1.5;
+            line-height: 1.6;
             word-wrap: break-word;
             white-space: pre-wrap;
+            position: relative;
         }
 
         .message.user .message-bubble {
-            background: #4D9FEC;
+            background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
             color: white;
             border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 12px rgba(77, 159, 236, 0.3);
         }
 
         .message.assistant .message-bubble {
             background: white;
-            color: #1F2937;
-            border: 1px solid #E5E7EB;
+            color: #1f2937;
+            border: 1px solid #e5e7eb;
             border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .message-time {
             font-size: 11px;
-            color: #9CA3AF;
+            color: #9ca3af;
             margin-top: 6px;
+            padding: 0 4px;
+        }
+
+        .message.user .message-time {
             text-align: right;
         }
 
@@ -1640,17 +1701,19 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 12px 18px;
+            padding: 14px 18px;
             background: white;
-            border: 1px solid #E5E7EB;
+            border: 1px solid #e5e7eb;
             border-radius: 18px;
             border-bottom-left-radius: 4px;
-            max-width: 75%;
+            max-width: 80%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .typing-text {
             font-size: 14px;
             color: #4D9FEC;
+            font-weight: 500;
         }
 
         .typing-dots {
@@ -1676,39 +1739,42 @@
                 opacity: 0.5;
             }
             40% {
-                transform: scale(1.2);
+                transform: scale(1.3);
                 opacity: 1;
             }
         }
 
-        /* Voice Visualizer */
-        #voiceVisualizer {
+        /* Voice Visualizer Full */
+        #voiceVisualizerFull {
             display: none;
             justify-content: center;
-            align-items: center;
-            gap: 4px;
-            padding: 16px;
+            align-items: flex-end;
+            gap: 3px;
+            padding: 20px;
             background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
+            height: 80px;
         }
 
         .voice-bar {
             width: 4px;
             border-radius: 2px;
             background: white;
-            animation: wave 1.2s ease-in-out infinite;
+            transition: height 0.1s ease;
         }
 
-        .voice-bar:nth-child(1) { height: 20px; animation-delay: 0s; }
-        .voice-bar:nth-child(2) { height: 30px; animation-delay: 0.1s; }
-        .voice-bar:nth-child(3) { height: 40px; animation-delay: 0.2s; }
-        .voice-bar:nth-child(4) { height: 50px; animation-delay: 0.3s; }
-        .voice-bar:nth-child(5) { height: 40px; animation-delay: 0.4s; }
-        .voice-bar:nth-child(6) { height: 30px; animation-delay: 0.5s; }
-        .voice-bar:nth-child(7) { height: 20px; animation-delay: 0.6s; }
+        .voice-bar.active {
+            animation: wave 0.8s ease-in-out infinite;
+        }
 
         @keyframes wave {
-            0%, 100% { transform: scaleY(0.5); }
-            50% { transform: scaleY(1.2); }
+            0%, 100% { 
+                height: 20px;
+                opacity: 0.6;
+            }
+            50% { 
+                height: 50px;
+                opacity: 1;
+            }
         }
 
         /* Suggestions */
@@ -1718,7 +1784,7 @@
             gap: 8px;
             overflow-x: auto;
             background: white;
-            border-top: 1px solid #F3F4F6;
+            border-top: 1px solid #f3f4f6;
         }
 
         #suggestions::-webkit-scrollbar {
@@ -1726,34 +1792,42 @@
         }
 
         #suggestions::-webkit-scrollbar-thumb {
-            background: #CBD5E1;
+            background: #cbd5e1;
             border-radius: 2px;
         }
 
         .suggestion-chip {
-            padding: 8px 16px;
-            background: #F1F5F9;
-            border: 1px solid #E2E8F0;
-            border-radius: 16px;
+            padding: 10px 16px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
             font-size: 13px;
             color: #475569;
             white-space: nowrap;
             cursor: pointer;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .suggestion-chip:hover {
-            background: #4D9FEC;
+            background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
             color: white;
-            border-color: #4D9FEC;
+            border-color: transparent;
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(77, 159, 236, 0.3);
+        }
+
+        .suggestion-chip i {
+            font-size: 12px;
         }
 
         /* Input Area */
         #inputArea {
-            padding: 16px 24px;
+            padding: 18px 24px;
             background: white;
-            border-top: 1px solid #E5E7EB;
+            border-top: 1px solid #e5e7eb;
             display: flex;
             gap: 12px;
             align-items: center;
@@ -1764,17 +1838,17 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            background: #F9FAFB;
-            border: 2px solid #E5E7EB;
-            border-radius: 24px;
-            padding: 10px 16px;
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 28px;
+            padding: 12px 18px;
             transition: all 0.3s ease;
         }
 
         #inputWrapper:focus-within {
             border-color: #4D9FEC;
             background: white;
-            box-shadow: 0 0 0 3px rgba(77, 159, 236, 0.1);
+            box-shadow: 0 0 0 4px rgba(77, 159, 236, 0.1);
         }
 
         #messageInput {
@@ -1783,17 +1857,17 @@
             outline: none;
             background: transparent;
             font-size: 14px;
-            color: #1F2937;
+            color: #1f2937;
             font-family: inherit;
         }
 
         #messageInput::placeholder {
-            color: #9CA3AF;
+            color: #9ca3af;
         }
 
         #voiceButton {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
             border: none;
             border-radius: 50%;
@@ -1804,26 +1878,48 @@
             justify-content: center;
             transition: all 0.3s ease;
             flex-shrink: 0;
+            position: relative;
         }
 
         #voiceButton:hover {
             transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(77, 159, 236, 0.4);
+            box-shadow: 0 4px 16px rgba(77, 159, 236, 0.4);
         }
 
         #voiceButton.listening {
-            background: #EF4444;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             animation: pulsate 1.5s ease-in-out infinite;
+        }
+
+        #voiceButton.listening::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #ef4444;
+            border-radius: 50%;
+            animation: ping 1.5s ease-out infinite;
         }
 
         @keyframes pulsate {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.15); }
+        }
+
+        @keyframes ping {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
         }
 
         #sendButton {
-            width: 44px;
-            height: 44px;
+            width: 46px;
+            height: 46px;
             background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
             border: none;
             border-radius: 50%;
@@ -1834,15 +1930,41 @@
             justify-content: center;
             transition: all 0.3s ease;
             flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(77, 159, 236, 0.3);
         }
 
         #sendButton:hover {
             transform: scale(1.1) rotate(15deg);
-            box-shadow: 0 4px 12px rgba(77, 159, 236, 0.4);
+            box-shadow: 0 6px 20px rgba(77, 159, 236, 0.5);
         }
 
         #sendButton:active {
-            transform: scale(0.95);
+            transform: scale(0.95) rotate(15deg);
+        }
+
+        /* Status Messages */
+        .status-message {
+            text-align: center;
+            padding: 12px;
+            margin: 12px 24px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+            font-size: 13px;
+            color: #1e40af;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .status-message.error {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #991b1b;
+        }
+
+        .status-message.success {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+            color: #166534;
         }
 
         /* Mobile Responsive */
@@ -1860,8 +1982,8 @@
             #bixbyButton {
                 bottom: 20px;
                 right: 20px;
-                width: 60px;
-                height: 60px;
+                width: 65px;
+                height: 65px;
             }
 
             #bixbyButton i {
@@ -1871,17 +1993,31 @@
             #chatHeader {
                 border-radius: 0;
             }
+
+            .message-bubble {
+                max-width: 85%;
+            }
         }
 
-        /* Smooth transitions */
-        * {
-            transition: background-color 0.2s ease, color 0.2s ease;
+        /* Accessibility */
+        button:focus {
+            outline: 2px solid #4D9FEC;
+            outline-offset: 2px;
+        }
+
+        /* Loading Animation */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading {
+            animation: spin 1s linear infinite;
         }
     </style>
 </head>
 <body>
     <!-- Bixby Button -->
-    <div id="bixbyButton">
+    <div id="bixbyButton" title="Open Prakash AI Assistant">
         <div class="pulse-ring"></div>
         <i class="fas fa-comment-dots"></i>
     </div>
@@ -1896,25 +2032,31 @@
                     <h3>Prakash AI</h3>
                     <p>
                         <span class="status-dot"></span>
-                        <span>Online Assistant</span>
+                        <span>AI Assistant Online</span>
                     </p>
                 </div>
             </div>
             <div class="header-actions">
-                <button id="voiceToggle" class="header-btn" title="Voice ON/OFF">
+                <button id="voiceToggle" class="header-btn" title="Toggle Voice Output">
                     <i class="fas fa-volume-mute"></i>
                 </button>
-                <button class="header-btn" onclick="BixbyAI.clearChat()" title="Clear">
+                <button class="header-btn" onclick="BixbyAI.clearChat()" title="Clear Chat">
                     <i class="fas fa-trash-alt"></i>
                 </button>
-                <button class="header-btn" onclick="BixbyAI.close()" title="Close">
+                <button class="header-btn" onclick="BixbyAI.close()" title="Close Chat">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
+            <div id="headerVoiceVisualizer">
+                <div class="voice-progress"></div>
+            </div>
         </div>
 
-        <!-- Voice Visualizer -->
-        <div id="voiceVisualizer">
+        <!-- Voice Visualizer Full -->
+        <div id="voiceVisualizerFull">
+            <div class="voice-bar"></div>
+            <div class="voice-bar"></div>
+            <div class="voice-bar"></div>
             <div class="voice-bar"></div>
             <div class="voice-bar"></div>
             <div class="voice-bar"></div>
@@ -1927,19 +2069,24 @@
         <!-- Suggestions -->
         <div id="suggestions">
             <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('Tell me about your projects')">
-                Projects
+                <i class="fas fa-code"></i>
+                <span>Projects</span>
             </div>
             <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('What are your skills?')">
-                Skills
+                <i class="fas fa-cogs"></i>
+                <span>Skills</span>
             </div>
             <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('Your experience?')">
-                Experience
+                <i class="fas fa-briefcase"></i>
+                <span>Experience</span>
             </div>
             <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('Contact information?')">
-                Contact
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
             </div>
             <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('Are you available?')">
-                Availability
+                <i class="fas fa-calendar-check"></i>
+                <span>Availability</span>
             </div>
         </div>
 
@@ -1954,12 +2101,13 @@
                     id="messageInput" 
                     placeholder="Ask about projects, skills, experience..."
                     autocomplete="off"
+                    aria-label="Message input"
                 >
-                <button id="voiceButton" title="Voice Input">
+                <button id="voiceButton" title="Voice Input (Click to speak)" aria-label="Voice input">
                     <i class="fas fa-microphone"></i>
                 </button>
             </div>
-            <button id="sendButton" title="Send">
+            <button id="sendButton" title="Send message" aria-label="Send">
                 <i class="fas fa-paper-plane"></i>
             </button>
         </div>
@@ -1974,7 +2122,8 @@
             input: null,
             voiceButton: null,
             voiceToggle: null,
-            voiceVisualizer: null,
+            voiceVisualizerFull: null,
+            headerVoiceVisualizer: null,
             sendButton: null,
 
             // State
@@ -1982,8 +2131,10 @@
             isTyping: false,
             voiceEnabled: false,
             isListening: false,
+            isSpeaking: false,
             recognition: null,
             synthesis: window.speechSynthesis,
+            voices: [],
 
             // Portfolio Data
             data: {
@@ -1999,88 +2150,172 @@
                 skills: [
                     "React.js", "Node.js", "MongoDB", "Express.js", "Next.js",
                     "JavaScript ES6+", "HTML5", "CSS3", "Redux", "Tailwind CSS",
-                    "Git", "AWS", "REST APIs", "JWT", "MySQL"
+                    "Material UI", "Bootstrap", "Git", "GitHub", "AWS",
+                    "Vercel", "REST APIs", "JWT Authentication", "MySQL",
+                    "Firebase", "Docker", "Postman"
                 ],
                 
                 projects: [
                     {
                         name: "Zerodha Clone",
-                        description: "Full-stack trading application with React, Node.js, MongoDB and JWT authentication",
-                        tech: "MERN Stack"
+                        description: "Full-stack trading application with React, Node.js, MongoDB and JWT authentication. Features include real-time data, user portfolio management, and secure transactions.",
+                        tech: "React, Node.js, MongoDB, Express, JWT",
+                        status: "Live and Deployed"
                     },
                     {
                         name: "Facebook Clone",
-                        description: "Social media platform with Firebase authentication and AWS deployment",
-                        tech: "React, Firebase, AWS"
+                        description: "Social media platform with Firebase authentication, real-time posts, likes, comments, and AWS deployment. Includes Google login integration.",
+                        tech: "React, Firebase, AWS Amplify, Tailwind CSS",
+                        status: "Live and Deployed"
                     },
                     {
                         name: "BharatMart E-Commerce",
-                        description: "Complete e-commerce platform with Razorpay payment integration",
-                        tech: "MERN Stack, Razorpay"
+                        description: "Complete e-commerce platform with Razorpay payment integration, product management, shopping cart, and order tracking.",
+                        tech: "MERN Stack, Razorpay, Vercel",
+                        status: "Live and Deployed"
                     },
                     {
                         name: "SangvichatGPT",
-                        description: "AI conversational web application with REST API integration",
-                        tech: "React, REST APIs"
+                        description: "AI conversational web application with REST API integration, dynamic state management, and ChatGPT-like interface.",
+                        tech: "React, REST APIs, Redux",
+                        status: "Live and Deployed"
                     },
                     {
                         name: "Airbnb Clone",
-                        description: "Property listing platform with full CRUD operations",
-                        tech: "MERN Stack"
+                        description: "Property listing platform with full CRUD operations, search filters, and booking management system.",
+                        tech: "MERN Stack, REST APIs",
+                        status: "Live and Deployed"
+                    },
+                    {
+                        name: "Namma Video Calling Application",
+                        description: "Real-time peer-to-peer audio and video communication platform using WebRTC technology.",
+                        tech: "React, WebRTC",
+                        status: "Live and Deployed"
                     }
                 ],
                 
-                experience: "1 years of hands-on experience in MERN stack development with expertise in building production-ready applications",
-                education: "BE Computer Science and Engineering from VTU with CGPA 8.1",
-                availability: "Available immediately for Full Stack Developer positions"
+                experience: "1 years of hands-on experience in MERN stack development with expertise in building production-ready, scalable web applications. Worked on multiple real-world projects deployed on cloud platforms.",
+                education: "Bachelor of Engineering in Computer Science and Engineering from VTU with CGPA 8.1. Strong foundation in Data Structures, Algorithms, DBMS, and Operating Systems.",
+                availability: "Available immediately for Full Stack Developer positions. Currently preparing for BEL, SSC CGL, and KPSC while actively developing projects."
             },
 
             // Initialize
             init() {
+                console.log('Initializing Bixby AI...');
+                
                 this.button = document.getElementById('bixbyButton');
                 this.chat = document.getElementById('bixbyChat');
                 this.messagesArea = document.getElementById('messagesArea');
                 this.input = document.getElementById('messageInput');
                 this.voiceButton = document.getElementById('voiceButton');
                 this.voiceToggle = document.getElementById('voiceToggle');
-                this.voiceVisualizer = document.getElementById('voiceVisualizer');
+                this.voiceVisualizerFull = document.getElementById('voiceVisualizerFull');
+                this.headerVoiceVisualizer = document.getElementById('headerVoiceVisualizer');
                 this.sendButton = document.getElementById('sendButton');
 
+                this.loadVoices();
                 this.setupSpeechRecognition();
                 this.attachEvents();
-                this.showWelcomeMessage();
+                
+                console.log('Bixby AI initialized successfully');
+            },
+
+            // Load Voices
+            loadVoices() {
+                if (this.synthesis) {
+                    this.voices = this.synthesis.getVoices();
+                    
+                    if (this.voices.length === 0) {
+                        this.synthesis.onvoiceschanged = () => {
+                            this.voices = this.synthesis.getVoices();
+                            console.log('Voices loaded:', this.voices.length);
+                        };
+                    }
+                }
             },
 
             // Setup Speech Recognition
             setupSpeechRecognition() {
-                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                
+                if (SpeechRecognition) {
                     this.recognition = new SpeechRecognition();
                     this.recognition.continuous = false;
                     this.recognition.interimResults = false;
                     this.recognition.lang = 'en-US';
+                    this.recognition.maxAlternatives = 1;
 
                     this.recognition.onstart = () => {
+                        console.log('Speech recognition started');
                         this.isListening = true;
                         this.voiceButton.classList.add('listening');
-                        this.voiceVisualizer.style.display = 'flex';
+                        this.voiceVisualizerFull.style.display = 'flex';
+                        this.animateVoiceBars(true);
+                        this.showStatusMessage('Listening... Speak now', 'success');
                     };
 
                     this.recognition.onresult = (event) => {
                         const transcript = event.results[0][0].transcript;
+                        const confidence = event.results[0][0].confidence;
+                        console.log('Speech recognized:', transcript, 'Confidence:', confidence);
+                        
                         this.input.value = transcript;
-                        this.sendMessage();
+                        this.showStatusMessage('Got it! Sending message...', 'success');
+                        
+                        setTimeout(() => {
+                            this.sendMessage();
+                        }, 500);
                     };
 
-                    this.recognition.onerror = (error) => {
-                        console.error('Speech recognition error:', error);
+                    this.recognition.onerror = (event) => {
+                        console.error('Speech recognition error:', event.error);
                         this.stopListening();
+                        
+                        let errorMessage = 'Voice input error. ';
+                        switch(event.error) {
+                            case 'no-speech':
+                                errorMessage += 'No speech detected. Please try again.';
+                                break;
+                            case 'audio-capture':
+                                errorMessage += 'Microphone not found.';
+                                break;
+                            case 'not-allowed':
+                                errorMessage += 'Microphone permission denied.';
+                                break;
+                            case 'network':
+                                errorMessage += 'Network error occurred.';
+                                break;
+                            default:
+                                errorMessage += 'Please try again.';
+                        }
+                        
+                        this.showStatusMessage(errorMessage, 'error');
                     };
 
                     this.recognition.onend = () => {
+                        console.log('Speech recognition ended');
                         this.stopListening();
                     };
+
+                    console.log('Speech recognition setup complete');
+                } else {
+                    console.warn('Speech recognition not supported in this browser');
                 }
+            },
+
+            // Animate Voice Bars
+            animateVoiceBars(active) {
+                const bars = this.voiceVisualizerFull.querySelectorAll('.voice-bar');
+                bars.forEach((bar, index) => {
+                    if (active) {
+                        bar.classList.add('active');
+                        bar.style.height = (20 + Math.random() * 30) + 'px';
+                        bar.style.animationDelay = (index * 0.1) + 's';
+                    } else {
+                        bar.classList.remove('active');
+                        bar.style.height = '20px';
+                    }
+                });
             },
 
             // Attach Events
@@ -2091,7 +2326,7 @@
                 this.voiceToggle.onclick = () => this.toggleVoiceOutput();
 
                 this.input.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
+                    if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
                         this.sendMessage();
                     }
@@ -2102,6 +2337,33 @@
                         this.close();
                     }
                 });
+
+                // Focus input when clicking in chat area
+                this.messagesArea.addEventListener('click', () => {
+                    if (!window.getSelection().toString()) {
+                        this.input.focus();
+                    }
+                });
+            },
+
+            // Show Status Message
+            showStatusMessage(message, type = 'info') {
+                const existingStatus = this.messagesArea.querySelector('.status-message');
+                if (existingStatus) {
+                    existingStatus.remove();
+                }
+
+                const statusDiv = document.createElement('div');
+                statusDiv.className = `status-message ${type}`;
+                statusDiv.textContent = message;
+                this.messagesArea.appendChild(statusDiv);
+                this.scrollToBottom();
+
+                setTimeout(() => {
+                    if (statusDiv.parentNode) {
+                        statusDiv.remove();
+                    }
+                }, 3000);
             },
 
             // Toggle Chat
@@ -2118,7 +2380,12 @@
                 this.chat.style.display = 'flex';
                 this.button.style.display = 'none';
                 this.isOpen = true;
-                setTimeout(() => this.input.focus(), 300);
+                setTimeout(() => {
+                    this.input.focus();
+                    if (this.messagesArea.children.length === 0) {
+                        this.showWelcomeMessage();
+                    }
+                }, 300);
             },
 
             // Close Chat
@@ -2127,12 +2394,13 @@
                 this.button.style.display = 'flex';
                 this.isOpen = false;
                 this.stopListening();
+                this.stopSpeaking();
             },
 
             // Toggle Voice Input
             toggleVoiceInput() {
                 if (!this.recognition) {
-                    alert('Voice input is not supported in your browser. Please use Chrome or Edge.');
+                    this.showStatusMessage('Voice input is not supported in your browser. Please use Chrome, Edge, or Safari.', 'error');
                     return;
                 }
 
@@ -2145,10 +2413,30 @@
 
             // Start Listening
             startListening() {
-                try {
-                    this.recognition.start();
-                } catch (error) {
-                    console.error('Error starting speech recognition:', error);
+                if (!this.recognition) return;
+
+                // Check for microphone permission
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ audio: true })
+                        .then(() => {
+                            try {
+                                this.recognition.start();
+                            } catch (error) {
+                                console.error('Error starting recognition:', error);
+                                this.showStatusMessage('Could not start voice input. Please try again.', 'error');
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Microphone permission denied:', error);
+                            this.showStatusMessage('Microphone access denied. Please enable it in browser settings.', 'error');
+                        });
+                } else {
+                    try {
+                        this.recognition.start();
+                    } catch (error) {
+                        console.error('Error starting recognition:', error);
+                        this.showStatusMessage('Could not start voice input. Please try again.', 'error');
+                    }
                 }
             },
 
@@ -2156,9 +2444,15 @@
             stopListening() {
                 this.isListening = false;
                 this.voiceButton.classList.remove('listening');
-                this.voiceVisualizer.style.display = 'none';
+                this.voiceVisualizerFull.style.display = 'none';
+                this.animateVoiceBars(false);
+                
                 if (this.recognition) {
-                    this.recognition.stop();
+                    try {
+                        this.recognition.stop();
+                    } catch (error) {
+                        console.error('Error stopping recognition:', error);
+                    }
                 }
             },
 
@@ -2170,31 +2464,64 @@
                     '<i class="fas fa-volume-up"></i>' :
                     '<i class="fas fa-volume-mute"></i>';
 
-                if (!this.voiceEnabled) {
-                    this.synthesis.cancel();
+                if (this.voiceEnabled) {
+                    this.showStatusMessage('Voice output enabled', 'success');
+                } else {
+                    this.stopSpeaking();
+                    this.showStatusMessage('Voice output disabled', 'info');
                 }
             },
 
             // Speak
             speak(text) {
-                if (this.voiceEnabled && this.synthesis) {
+                if (!this.voiceEnabled || !this.synthesis) return;
+
+                this.stopSpeaking();
+
+                // Clean text for speech (remove extra formatting)
+                const cleanText = text.replace(/\n+/g, '. ').substring(0, 300);
+                
+                const utterance = new SpeechSynthesisUtterance(cleanText);
+                
+                // Try to find a good English voice
+                const preferredVoice = this.voices.find(voice => 
+                    voice.lang.startsWith('en') && (voice.name.includes('Google') || voice.name.includes('Microsoft'))
+                ) || this.voices.find(voice => voice.lang.startsWith('en'));
+                
+                if (preferredVoice) {
+                    utterance.voice = preferredVoice;
+                }
+                
+                utterance.lang = 'en-US';
+                utterance.rate = 0.95;
+                utterance.pitch = 1.0;
+                utterance.volume = 1.0;
+
+                utterance.onstart = () => {
+                    this.isSpeaking = true;
+                    this.headerVoiceVisualizer.style.display = 'block';
+                };
+
+                utterance.onend = () => {
+                    this.isSpeaking = false;
+                    this.headerVoiceVisualizer.style.display = 'none';
+                };
+
+                utterance.onerror = (error) => {
+                    console.error('Speech synthesis error:', error);
+                    this.isSpeaking = false;
+                    this.headerVoiceVisualizer.style.display = 'none';
+                };
+
+                this.synthesis.speak(utterance);
+            },
+
+            // Stop Speaking
+            stopSpeaking() {
+                if (this.synthesis) {
                     this.synthesis.cancel();
-                    
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.lang = 'en-US';
-                    utterance.rate = 0.95;
-                    utterance.pitch = 1.0;
-                    utterance.volume = 1.0;
-
-                    utterance.onstart = () => {
-                        this.voiceVisualizer.style.display = 'flex';
-                    };
-
-                    utterance.onend = () => {
-                        this.voiceVisualizer.style.display = 'none';
-                    };
-
-                    this.synthesis.speak(utterance);
+                    this.isSpeaking = false;
+                    this.headerVoiceVisualizer.style.display = 'none';
                 }
             },
 
@@ -2213,69 +2540,88 @@
                     const response = this.generateResponse(text.toLowerCase());
                     this.addMessage(response, 'assistant');
                     this.speak(response);
-                }, 1000 + Math.random() * 500);
+                }, 800 + Math.random() * 700);
             },
 
             // Use Suggestion
             useSuggestion(text) {
                 this.input.value = text;
-                this.sendMessage();
+                this.input.focus();
+                setTimeout(() => this.sendMessage(), 100);
             },
 
             // Generate Response
             generateResponse(query) {
                 // Projects
                 if (query.includes('project')) {
-                    let response = `I have built ${this.data.projects.length} production-ready projects:\n\n`;
+                    let response = `I have built ${this.data.projects.length} production-ready MERN stack projects:\n\n`;
                     this.data.projects.forEach((project, index) => {
-                        response += `${index + 1}. ${project.name}\n${project.description}\nTech: ${project.tech}\n\n`;
+                        response += `${index + 1}. ${project.name}\n${project.description}\nTech Stack: ${project.tech}\nStatus: ${project.status}\n\n`;
                     });
-                    return response + "All projects are deployed and live!";
+                    return response.trim();
                 }
 
                 // Skills
                 if (query.includes('skill') || query.includes('technology') || query.includes('tech')) {
-                    return `My technical skills include:\n\n${this.data.skills.join(', ')}\n\nI specialize in MERN stack development with ${this.data.experience}`;
+                    const skillCategories = {
+                        'Frontend': this.data.skills.slice(0, 10),
+                        'Backend': ['Node.js', 'Express.js', 'MongoDB', 'REST APIs', 'JWT'],
+                        'Tools & Cloud': ['Git', 'GitHub', 'AWS', 'Vercel', 'Docker', 'Postman']
+                    };
+                    
+                    let response = 'My Technical Skills:\n\n';
+                    for (const [category, skills] of Object.entries(skillCategories)) {
+                        response += `${category}: ${skills.join(', ')}\n\n`;
+                    }
+                    return response + this.data.experience;
                 }
 
                 // Experience
                 if (query.includes('experience') || query.includes('work')) {
-                    return `${this.data.experience}. I have worked on multiple full-stack applications including e-commerce platforms, social media clones, and trading applications.`;
+                    return `${this.data.experience}\n\nI have successfully delivered multiple full-stack applications including:\n- Trading platforms\n- Social media applications\n- E-commerce websites\n- Real-time communication tools\n\nAll projects are deployed on cloud platforms and actively maintained.`;
                 }
 
                 // Education
-                if (query.includes('education') || query.includes('degree') || query.includes('college')) {
+                if (query.includes('education') || query.includes('degree') || query.includes('college') || query.includes('study')) {
                     return this.data.education;
                 }
 
                 // Contact
                 if (query.includes('contact') || query.includes('email') || query.includes('phone') || query.includes('reach')) {
-                    return `You can reach me at:\n\nEmail: ${this.data.email}\nPhone: ${this.data.phone}\nLocation: ${this.data.location}\n\nLinkedIn: ${this.data.linkedin}\nGitHub: ${this.data.github}\nWebsite: ${this.data.website}`;
+                    return `You can contact me through:\n\nEmail: ${this.data.email}\nPhone: ${this.data.phone}\nLocation: ${this.data.location}\n\nProfessional Links:\nLinkedIn: ${this.data.linkedin}\nGitHub: ${this.data.github}\nPortfolio: ${this.data.website}\n\nFeel free to reach out for collaborations or opportunities!`;
                 }
 
                 // Availability
-                if (query.includes('available') || query.includes('hire') || query.includes('join')) {
-                    return this.data.availability;
+                if (query.includes('available') || query.includes('hire') || query.includes('join') || query.includes('start')) {
+                    return `${this.data.availability}\n\nI am actively seeking Full Stack Developer positions where I can contribute my MERN stack expertise and continue growing as a developer. I can join immediately and relocate if needed.`;
                 }
 
                 // GitHub
-                if (query.includes('github') || query.includes('code')) {
-                    return `Check out my GitHub profile at ${this.data.github} to see all my projects and contributions!`;
+                if (query.includes('github') || query.includes('code') || query.includes('repository')) {
+                    return `Visit my GitHub profile at ${this.data.github}\n\nYou will find all my projects with complete source code, documentation, and live deployment links. I regularly contribute to open source and maintain clean, well-documented code.`;
                 }
 
-                // Portfolio/Website
+                // Portfolio
                 if (query.includes('website') || query.includes('portfolio')) {
-                    return `Visit my portfolio website at ${this.data.website} to see all my projects, skills, and experience in detail!`;
+                    return `Check out my complete portfolio at ${this.data.website}\n\nMy portfolio showcases all my projects with live demos, detailed case studies, technical skills, work experience, and contact information. It is built with modern web technologies and optimized for all devices.`;
+                }
+
+                // Resume
+                if (query.includes('resume') || query.includes('cv')) {
+                    return `My resume highlights:\n\n- ${this.data.role}\n- ${this.data.experience}\n- ${this.data.education}\n- ${this.data.projects.length}+ Production Projects\n- ${this.data.skills.length}+ Technical Skills\n\nVisit ${this.data.website} to download my complete resume or view my detailed portfolio.`;
                 }
 
                 // Default Response
-                return `Hello! I am ${this.data.name}, a ${this.data.role}.\n\nYou can ask me about:\n- My Projects\n- Technical Skills\n- Work Experience\n- Education\n- Contact Information\n- Availability\n\nWhat would you like to know?`;
+                return `Hello! I am ${this.data.name}, a ${this.data.role} with ${this.data.experience}\n\nI can help you learn about:\n\n- My MERN Stack Projects (${this.data.projects.length}+ live applications)\n- Technical Skills and Expertise\n- Professional Experience\n- Education and Qualifications\n- Contact Information\n- Current Availability\n\nWhat would you like to know? You can type your question or use the voice input button to speak!`;
             },
 
             // Add Message
             addMessage(text, type) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `message ${type}`;
+
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
 
                 const bubble = document.createElement('div');
                 bubble.className = 'message-bubble';
@@ -2288,10 +2634,9 @@
                     minute: '2-digit'
                 });
 
-                messageDiv.appendChild(bubble);
-                if (type === 'user') {
-                    messageDiv.appendChild(time);
-                }
+                contentDiv.appendChild(bubble);
+                contentDiv.appendChild(time);
+                messageDiv.appendChild(contentDiv);
 
                 this.messagesArea.appendChild(messageDiv);
                 this.scrollToBottom();
@@ -2304,7 +2649,7 @@
                 typingDiv.className = 'message assistant';
                 typingDiv.innerHTML = `
                     <div class="typing-indicator">
-                        <span class="typing-text">Prakash AI is typing</span>
+                        <span class="typing-text">Prakash AI is thinking</span>
                         <div class="typing-dots">
                             <div class="typing-dot"></div>
                             <div class="typing-dot"></div>
@@ -2320,35 +2665,61 @@
             // Hide Typing
             hideTyping(element) {
                 this.isTyping = false;
-                element.remove();
+                if (element && element.parentNode) {
+                    element.remove();
+                }
             },
 
             // Scroll to Bottom
             scrollToBottom() {
-                this.messagesArea.scrollTop = this.messagesArea.scrollHeight;
+                setTimeout(() => {
+                    this.messagesArea.scrollTop = this.messagesArea.scrollHeight;
+                }, 100);
             },
 
             // Clear Chat
             clearChat() {
-                if (confirm('Are you sure you want to clear the chat?')) {
+                if (confirm('Are you sure you want to clear the conversation? This cannot be undone.')) {
                     this.messagesArea.innerHTML = '';
                     this.showWelcomeMessage();
+                    this.showStatusMessage('Chat cleared', 'info');
                 }
             },
 
             // Welcome Message
             showWelcomeMessage() {
                 setTimeout(() => {
-                    const welcomeText = `Hello! I am Prakash AI, your intelligent portfolio assistant.\n\nI can help you learn about:\n- My MERN Stack Projects\n- Technical Skills and Expertise\n- Professional Experience\n- Education and Certifications\n- Contact Information\n- Current Availability\n\nFeel free to ask me anything or use voice input by clicking the microphone button!`;
+                    const welcomeText = `Hello! I am Prakash AI, your intelligent portfolio assistant.\n\nI can provide detailed information about:\n\n- MERN Stack Projects (${this.data.projects.length}+ live applications)\n- Technical Skills and Technologies\n- Professional Experience (3+ years)\n- Education and Qualifications\n- Contact Details and Availability\n\nYou can type your questions or click the microphone button for voice input. Try asking "Tell me about your projects" or use the suggestion chips above!`;
+                    
                     this.addMessage(welcomeText, 'assistant');
-                    this.speak(welcomeText);
-                }, 500);
+                    
+                    if (this.voiceEnabled) {
+                        this.speak(welcomeText);
+                    }
+                }, 600);
             }
         };
 
         // Initialize when DOM is ready
-        document.addEventListener('DOMContentLoaded', () => {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                BixbyAI.init();
+            });
+        } else {
             BixbyAI.init();
+        }
+
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                BixbyAI.stopListening();
+                BixbyAI.stopSpeaking();
+            }
+        });
+
+        // Log when page is fully loaded
+        window.addEventListener('load', () => {
+            console.log('Page fully loaded - Bixby AI ready');
         });
     </script>
 </body>
