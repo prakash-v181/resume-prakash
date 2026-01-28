@@ -1368,7 +1368,8 @@
 
     <!-- chatbot AI -->
 
-<!DOCTYPE html>
+
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1411,10 +1412,6 @@
             box-shadow: 0 12px 32px rgba(77, 159, 236, 0.6);
         }
 
-        #bixbyButton:active {
-            transform: scale(0.95);
-        }
-
         #bixbyButton i {
             font-size: 32px;
             color: white;
@@ -1426,21 +1423,14 @@
             height: 70px;
             border: 3px solid #4D9FEC;
             border-radius: 50%;
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
         }
 
-        /* Chat Container */
         #bixbyChat {
             position: fixed;
             bottom: 110px;
@@ -1455,52 +1445,27 @@
             flex-direction: column;
             z-index: 9999;
             overflow: hidden;
-            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: slideUp 0.4s ease;
         }
 
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Header */
         #chatHeader {
             background: linear-gradient(135deg, #4D9FEC 0%, #5F8DE8 100%);
             padding: 20px 24px;
             color: white;
-            border-radius: 24px 24px 0 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
-        }
-
-        #chatHeader::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
         }
 
         .header-left {
             display: flex;
             align-items: center;
             gap: 14px;
-            z-index: 1;
         }
 
         .avatar {
@@ -1514,13 +1479,11 @@
             font-size: 24px;
             color: #4D9FEC;
             font-weight: 700;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .header-info h3 {
             font-size: 18px;
             font-weight: 700;
-            margin-bottom: 4px;
         }
 
         .header-info p {
@@ -1536,7 +1499,7 @@
             height: 8px;
             background: #4ade80;
             border-radius: 50%;
-            animation: blink 2s ease-in-out infinite;
+            animation: blink 2s infinite;
         }
 
         @keyframes blink {
@@ -1547,7 +1510,6 @@
         .header-actions {
             display: flex;
             gap: 8px;
-            z-index: 1;
         }
 
         .header-btn {
@@ -1562,7 +1524,6 @@
             align-items: center;
             justify-content: center;
             transition: all 0.2s ease;
-            backdrop-filter: blur(10px);
         }
 
         .header-btn:hover {
@@ -1575,7 +1536,6 @@
             color: #4D9FEC;
         }
 
-        /* Messages Area */
         #messagesArea {
             flex: 1;
             padding: 24px;
@@ -1588,34 +1548,20 @@
             width: 6px;
         }
 
-        #messagesArea::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
         #messagesArea::-webkit-scrollbar-thumb {
             background: #CBD5E1;
             border-radius: 3px;
         }
 
-        #messagesArea::-webkit-scrollbar-thumb:hover {
-            background: #94A3B8;
-        }
-
         .message {
             display: flex;
             margin-bottom: 16px;
-            animation: fadeIn 0.3s ease-out;
+            animation: fadeIn 0.3s ease;
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .message.user {
@@ -1652,7 +1598,6 @@
             text-align: right;
         }
 
-        /* Typing Indicator */
         .typing-indicator {
             display: flex;
             align-items: center;
@@ -1680,7 +1625,7 @@
             height: 8px;
             background: #4D9FEC;
             border-radius: 50%;
-            animation: bounce 1.4s infinite ease-in-out;
+            animation: bounce 1.4s infinite;
         }
 
         .typing-dot:nth-child(1) { animation-delay: 0s; }
@@ -1688,17 +1633,10 @@
         .typing-dot:nth-child(3) { animation-delay: 0.4s; }
 
         @keyframes bounce {
-            0%, 80%, 100% {
-                transform: scale(0.8);
-                opacity: 0.5;
-            }
-            40% {
-                transform: scale(1.2);
-                opacity: 1;
-            }
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1.2); opacity: 1; }
         }
 
-        /* Voice Visualizer */
         #voiceVisualizer {
             display: none;
             justify-content: center;
@@ -1715,7 +1653,7 @@
             animation: wave 1.2s ease-in-out infinite;
         }
 
-        .voice-bar:nth-child(1) { height: 20px; animation-delay: 0s; }
+        .voice-bar:nth-child(1) { height: 20px; }
         .voice-bar:nth-child(2) { height: 30px; animation-delay: 0.1s; }
         .voice-bar:nth-child(3) { height: 40px; animation-delay: 0.2s; }
         .voice-bar:nth-child(4) { height: 50px; animation-delay: 0.3s; }
@@ -1728,7 +1666,6 @@
             50% { transform: scaleY(1.2); }
         }
 
-        /* Suggestions */
         #suggestions {
             padding: 16px 24px 12px;
             display: flex;
@@ -1740,11 +1677,6 @@
 
         #suggestions::-webkit-scrollbar {
             height: 4px;
-        }
-
-        #suggestions::-webkit-scrollbar-thumb {
-            background: #CBD5E1;
-            border-radius: 2px;
         }
 
         .suggestion-chip {
@@ -1762,18 +1694,15 @@
         .suggestion-chip:hover {
             background: #4D9FEC;
             color: white;
-            border-color: #4D9FEC;
             transform: translateY(-2px);
         }
 
-        /* Input Area */
         #inputArea {
             padding: 16px 24px;
             background: white;
             border-top: 1px solid #E5E7EB;
             display: flex;
             gap: 12px;
-            align-items: center;
         }
 
         #inputWrapper {
@@ -1820,17 +1749,15 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            flex-shrink: 0;
         }
 
         #voiceButton:hover {
             transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(77, 159, 236, 0.4);
         }
 
         #voiceButton.listening {
             background: #EF4444;
-            animation: micPulse 1s ease-in-out infinite;
+            animation: micPulse 1s infinite;
         }
 
         @keyframes micPulse {
@@ -1850,16 +1777,10 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            flex-shrink: 0;
         }
 
         #sendButton:hover:not(:disabled) {
             transform: scale(1.1) rotate(15deg);
-            box-shadow: 0 4px 12px rgba(77, 159, 236, 0.4);
-        }
-
-        #sendButton:active {
-            transform: scale(0.95);
         }
 
         #sendButton:disabled {
@@ -1867,14 +1788,12 @@
             cursor: not-allowed;
         }
 
-        /* Status Messages */
         .status-message {
             text-align: center;
             padding: 10px 16px;
             margin: 12px 24px;
             border-radius: 12px;
             font-size: 13px;
-            animation: fadeIn 0.3s ease;
         }
 
         .status-message.error {
@@ -1883,13 +1802,6 @@
             color: #991B1B;
         }
 
-        .status-message.success {
-            background: #F0FDF4;
-            border: 1px solid #BBF7D0;
-            color: #166534;
-        }
-
-        /* Mobile Responsive */
         @media (max-width: 480px) {
             #bixbyChat {
                 bottom: 0;
@@ -1897,62 +1809,33 @@
                 left: 0;
                 width: 100%;
                 height: 100vh;
-                max-height: 100vh;
-                border-radius: 0;
-            }
-
-            #bixbyButton {
-                bottom: 20px;
-                right: 20px;
-                width: 60px;
-                height: 60px;
-            }
-
-            #bixbyButton i {
-                font-size: 28px;
-            }
-
-            #chatHeader {
                 border-radius: 0;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Bixby Button -->
-    <div id="bixbyButton" title="Open Prakash AI">
+    <div id="bixbyButton">
         <div class="pulse-ring"></div>
         <i class="fas fa-comment-dots"></i>
     </div>
 
-    <!-- Chat Interface -->
     <div id="bixbyChat">
-        <!-- Header -->
         <div id="chatHeader">
             <div class="header-left">
                 <div class="avatar">P</div>
                 <div class="header-info">
                     <h3>Prakash AI</h3>
-                    <p>
-                        <span class="status-dot"></span>
-                        <span>AI Assistant Online</span>
-                    </p>
+                    <p><span class="status-dot"></span> AI Assistant</p>
                 </div>
             </div>
             <div class="header-actions">
-                <button id="voiceToggle" class="header-btn" title="Voice ON/OFF">
-                    <i class="fas fa-volume-mute"></i>
-                </button>
-                <button class="header-btn" onclick="BixbyAI.clearChat()" title="Clear">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
-                <button class="header-btn" onclick="BixbyAI.close()" title="Close">
-                    <i class="fas fa-times"></i>
-                </button>
+                <button id="voiceToggle" class="header-btn"><i class="fas fa-volume-mute"></i></button>
+                <button class="header-btn" onclick="AI.clearChat()"><i class="fas fa-trash-alt"></i></button>
+                <button class="header-btn" onclick="AI.close()"><i class="fas fa-times"></i></button>
             </div>
         </div>
 
-        <!-- Voice Visualizer -->
         <div id="voiceVisualizer">
             <div class="voice-bar"></div>
             <div class="voice-bar"></div>
@@ -1963,403 +1846,477 @@
             <div class="voice-bar"></div>
         </div>
 
-        <!-- Suggestions -->
         <div id="suggestions">
-            <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('Tell me about your projects')">
-                Projects
-            </div>
-            <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('What are your skills?')">
-                Skills
-            </div>
-            <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('Your experience?')">
-                Experience
-            </div>
-            <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('Contact information?')">
-                Contact
-            </div>
-            <div class="suggestion-chip" onclick="BixbyAI.useSuggestion('Are you available?')">
-                Availability
-            </div>
+            <div class="suggestion-chip" onclick="AI.ask('Tell me about your MERN projects')">Projects</div>
+            <div class="suggestion-chip" onclick="AI.ask('What are your skills?')">Skills</div>
+            <div class="suggestion-chip" onclick="AI.ask('Your work experience?')">Experience</div>
+            <div class="suggestion-chip" onclick="AI.ask('Education details?')">Education</div>
+            <div class="suggestion-chip" onclick="AI.ask('Contact info?')">Contact</div>
         </div>
 
-        <!-- Messages -->
         <div id="messagesArea"></div>
 
-        <!-- Input Area -->
         <div id="inputArea">
             <div id="inputWrapper">
-                <input 
-                    type="text" 
-                    id="messageInput" 
-                    placeholder="Ask about projects, skills, experience..."
-                    autocomplete="off"
-                >
-                <button id="voiceButton" title="Voice Input">
-                    <i class="fas fa-microphone"></i>
-                </button>
+                <input type="text" id="messageInput" placeholder="Ask about projects, skills, experience..." autocomplete="off">
+                <button id="voiceButton"><i class="fas fa-microphone"></i></button>
             </div>
-            <button id="sendButton" title="Send">
-                <i class="fas fa-paper-plane"></i>
-            </button>
+            <button id="sendButton"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
     <script>
-        const BixbyAI = {
-            // Backend API Configuration
-            API_URL: 'https://chatbotbackend-donx.onrender.com',
-            
-            // Elements
-            button: null,
+        const AI = {
+            API: 'https://chatbotbackend-donx.onrender.com',
             chat: null,
-            messagesArea: null,
+            msgs: null,
             input: null,
-            voiceButton: null,
+            voiceBtn: null,
             voiceToggle: null,
-            voiceVisualizer: null,
-            sendButton: null,
-
-            // State
+            voiceViz: null,
+            sendBtn: null,
             isOpen: false,
             isTyping: false,
-            voiceEnabled: false,
-            isListening: false,
+            voiceOn: false,
+            listening: false,
             recognition: null,
             synthesis: window.speechSynthesis,
 
-            // Initialize
-            init() {
-                console.log('Initializing Bixby AI with backend:', this.API_URL);
-                
-                this.button = document.getElementById('bixbyButton');
-                this.chat = document.getElementById('bixbyChat');
-                this.messagesArea = document.getElementById('messagesArea');
-                this.input = document.getElementById('messageInput');
-                this.voiceButton = document.getElementById('voiceButton');
-                this.voiceToggle = document.getElementById('voiceToggle');
-                this.voiceVisualizer = document.getElementById('voiceVisualizer');
-                this.sendButton = document.getElementById('sendButton');
+            // COMPLETE PORTFOLIO DATA FROM YOUR WEBSITE
+            data: `PRAKASH - MERN Stack Developer & Junior Software Developer
 
-                this.setupSpeechRecognition();
-                this.attachEvents();
+CONTACT:
+Email: prakashtare181@gmail.com
+Phone: +91 8050458999
+Location: Bidar, Karnataka, India
+Portfolio: https://prakash-v181.github.io/resume-prakash/
+GitHub: github.com/prakash-v181
+LinkedIn: linkedin.com/in/prakash181gupta/
+
+PROFESSIONAL SUMMARY:
+Energetic and self-driven MERN Stack developer with expertise in building production-ready web applications. Specialized in full-stack development using modern tools, frameworks, and libraries. Strong attention to detail in generating best products. Experienced in building web presence from ground up - concept, navigation, layout, and deployment.
+
+CURRENT WORK EXPERIENCE:
+
+1. Full-Stack Developer - Main Flow Services and Technologies (Jan 2025 - April 2025)
+   Intern ID: 15650
+   - Developed inventory management service with Government of India collaboration
+   - Built full backend using TypeScript
+   - Tech: ReactJS, MongoDB, NodeJS, ExpressJS, TypeScript
+   - Remote
+
+2. Software Developer - Bluestock (Feb 2025 - Present)
+   SDE Intern: BEENSD48763
+   - Developed payment auto-debit microservice using NestJS and Apache Kafka
+   - Currently under sanction by Reserve Bank of India
+   - Built SMS collector service deployed using Kubernetes
+   - Tech: NestJS, Apache Kafka, TypeScript, MongoDB
+   - Remote
+
+3. Python Datasets and AI - Edunet Foundation (Dec 2025 - Feb 2025)
+   AICTE Internship ID: INTERNSHIP_1733138870674d99b64cb4b
+   - Developed CNN model for plastic waste classification
+   - Skills: Python Datasets and AI technologies
+   - AICTE Student ID: STU63e4e781c60ec1675945857
+   - Remote
+
+4. Full Stack Web Development - Take It Smart (OPC) Pvt Ltd (April 2023 - Aug 2023)
+   - Built projects for graduate students
+   - Remote
+
+EDUCATION:
+
+1. B.E in Computer Science and Engineering (Nov 2023)
+   Lingaraj Appa Engineering College, Bidar
+   Visvesvaraya Technological University (VTU)
+
+2. Diploma in Computer Science and Engineering (Dec 2019)
+   Government Polytechnic College Aurad B
+   Department of Technical Education
+
+3. SSLC (10th)
+   Government School Bidar
+   Karnataka Secondary Education Examination Board (KSEEB)
+
+4. ITI in Electrician
+   Government College Bidar
+   Department of Industrial Training and Employment
+
+MAJOR PROJECTS (ALL LIVE):
+
+1. Zerodha Clone - Trading Platform
+   Full-stack trading app with React, Node.js, Express, MongoDB, JWT authentication
+   Buy/Sell order management, deployed on Vercel and Render with secure CORS APIs
+   Also deployed on AWS
+   Tech: React.js, Node.js, MERN Stack
+   Live: https://dashazerodhsangvi.vercel.app/ and https://zerodhafnd-ui.vercel.app/
+
+2. SangviGPT - AI ChatGPT Clone
+   AI chatbot using MERN & GPT API, simple and fast AI conversation app
+   Tech: Node.js, Express.js, OpenAI API, MERN Stack
+   Live: https://chatgptsangviprakash.vercel.app
+
+3. Facebook Clone - Social Media Platform
+   Fully-functional social platform with User Authentication (JWT + Google OAuth)
+   Hosted on AWS Amplify (Frontend) & Render (Backend)
+   Tech: React, Next.js, Node.js, Express, MongoDB, Axios, Google OAuth, JWT, Framer Motion, Tailwind CSS
+   Live: https://main.d3q0ousdwh9cvw.amplifyapp.com/
+
+4. Medibuddy - Smart Disease Predictor
+   Predict diseases like Diabetes, Heart, Liver, Kidney & Breast Cancer
+   ML-based predictions deployed on AWS EC2
+   Tech: Python, Flask, Machine Learning, AWS EC2, HTML, CSS
+   Live: http://13.232.193.157:8000/
+
+5. YouTube Clone
+   Responsive YouTube clone with React, Vite, Tailwind CSS
+   Video playback and related suggestions
+   Tech: React + Vite, MERN Stack
+   Live: https://youtubclonesangvi.vercel.app
+
+6. GitHub Clone
+   GitHub-like platform using MERN stack with authentication, repository management, file uploads
+   Deployed frontend on Vercel and backend on Render
+   Tech: REST APIs, MERN Stack
+   Live: https://prakashgithubsangvi.vercel.app
+
+7. Airbnb Clone
+   Property listing platform with full CRUD operations
+   Tech: Node.js, Express.js, MongoDB, MERN Stack
+   Live: https://airbndsangvi.vercel.app/
+
+8. Namma Video Calling Application
+   Real-time peer-to-peer video calling with WebRTC
+   Tech: Node.js, WebRTC, React.js, MERN Stack
+   Live: https://nammavideocalling.vercel.app
+
+9. BharatMart - E-Commerce Platform
+   Full-stack MERN e-commerce with authentication, product management, cart, orders, secure checkout
+   Deployed using Vercel and Render
+   Tech: Node.js, Express.js, React.js, MongoDB
+   Live: https://bharatmartps.vercel.app/
+
+10. Selenium Cucumber Banking Automation Framework
+    Automated end-to-end UI test scenarios for banking application
+    CI/CD integration via GitHub Actions
+    Tech: Java, Selenium WebDriver, Cucumber (BDD), TestNG, Maven, GitHub Actions
+
+TECHNICAL SKILLS:
+
+Frontend:
+- HTML5, CSS3, JavaScript (ES6+), TypeScript
+- React.js, Next.js, Redux, jQuery
+- Bootstrap, Tailwind CSS, Material UI, SASS/SCSS
+- Font Awesome
+
+Backend:
+- Node.js, Express.js
+- NestJS, Spring Boot
+- REST APIs, Socket.io
+- JWT Authentication, OAuth
+- Apache Kafka
+
+Databases:
+- MongoDB, MySQL, PostgreSQL
+- Firebase, NoSQL
+
+Cloud & DevOps:
+- AWS (EC2, Amplify), Heroku, Vercel, Render, Netlify
+- GitHub Pages, CI/CD
+- Docker, Kubernetes
+
+Tools & Version Control:
+- Git, GitHub, VS Code, Postman
+- NPM, Swagger
+- WebRTC
+
+Languages:
+- JavaScript, Java, Python
+
+Testing:
+- Selenium, Cucumber, TestNG
+
+CERTIFICATIONS & COURSES:
+
+1. MERN Stack Developer - Apna College (Jan 2025 - Present, 8 months)
+   Full-stack development course covering:
+   - MongoDB, Express.js, React, Node.js
+   - JavaScript, DOM, jQuery, HandlebarsJS
+   - CSS preprocessing (SASS/SCSS)
+   - Git, GitHub, Heroku, Netlify deployment
+
+2. Full Stack Java Development - Skill-Up by Simplilearn (June 2023 - Sept 2024)
+   Code: 4360612
+   - Frontend: HTML, CSS, JavaScript, React
+   - Backend: Java, Spring Boot, Node.js
+   - Database: MySQL, MongoDB
+   - API Development, Deployment & Hosting
+
+3. Cybersecurity Skilling Program 2023 - C3iHub, IIT Kanpur (Oct 2023 - Dec 2023)
+   ID: C3iHub04640
+   - Cryptography, security models, tools
+   - Cybersecurity threats, vulnerabilities, risks
+
+4. Udemy Courses (May 2024 - Present)
+   - HTML5 and CSS3, JavaScript Essentials
+   - jQuery, ES6 JavaScript, React JS
+   - Git Bash, Node.js, Express.js
+   - MongoDB, NPM
+
+OTHER WORK EXPERIENCE:
+
+1. Data Entry Operator - GE MES (AF) Bidar (March 2022 - Oct 2022)
+   Government office, organizing official records
+   Drafted correspondence, maintained registers, prepared reports
+   Address: GE AF Bidar, Naubad road, Bidar, Karnataka 585401
+
+2. Insurance Advisor - SBI Life Insurance (Aug 2023 - Present)
+   Code: SLI991796474
+
+3. DRA Debt Recovery Agent - Voice Process (March 2024 - Dec 2024)
+   RBL credit card payment recovery
+   Rasalapur Hyderabad
+
+4. Digital Crop Survey - Dept of Agriculture Karnataka (March 2020 - Present)
+   Crop data collection, field visits
+   Bidar
+
+5. Assistant - Aegies Limited (June 2017 - June 2018)
+   Crop & tractor loan services for ICICI Bank
+   Begumpet Hyderabad
+
+SERVICES OFFERED:
+- Web Development (Responsive websites using HTML5, CSS3, Bootstrap, JavaScript, MERN)
+- SEO Optimization
+- Web Applications (Relational/No-relational databases)
+- Animation & Visual Elements
+- Responsive Design
+- E-commerce Websites
+
+STRENGTHS:
+- Fast learner
+- Ability to adapt with people
+- Self-motivated
+
+INTERESTS:
+- Reading
+- React Native
+- Java Backend Development
+
+LANGUAGES:
+English (Intermediate): Listening 84%, Speaking 56%, Reading 73%, Writing 60%
+Kannada (Mother tongue)
+Hindi, Telugu
+
+AVAILABILITY: Available for Full Stack Developer positions immediately`,
+
+            init() {
+                this.chat = document.getElementById('bixbyChat');
+                this.msgs = document.getElementById('messagesArea');
+                this.input = document.getElementById('messageInput');
+                this.voiceBtn = document.getElementById('voiceButton');
+                this.voiceToggle = document.getElementById('voiceToggle');
+                this.voiceViz = document.getElementById('voiceVisualizer');
+                this.sendBtn = document.getElementById('sendButton');
+                this.setupVoice();
+                this.bind();
             },
 
-            // Setup Speech Recognition
-            setupSpeechRecognition() {
-                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                if (SpeechRecognition) {
-                    this.recognition = new SpeechRecognition();
+            setupVoice() {
+                const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (SR) {
+                    this.recognition = new SR();
                     this.recognition.continuous = false;
-                    this.recognition.interimResults = false;
                     this.recognition.lang = 'en-US';
-
                     this.recognition.onstart = () => {
-                        this.isListening = true;
-                        this.voiceButton.classList.add('listening');
-                        this.voiceVisualizer.style.display = 'flex';
+                        this.listening = true;
+                        this.voiceBtn.classList.add('listening');
+                        this.voiceViz.style.display = 'flex';
                     };
-
-                    this.recognition.onresult = (event) => {
-                        const transcript = event.results[0][0].transcript;
-                        this.input.value = transcript;
-                        setTimeout(() => this.sendMessage(), 300);
+                    this.recognition.onresult = (e) => {
+                        this.input.value = e.results[0][0].transcript;
+                        setTimeout(() => this.send(), 300);
                     };
-
-                    this.recognition.onerror = () => {
-                        this.stopListening();
-                    };
-
-                    this.recognition.onend = () => {
-                        this.stopListening();
-                    };
+                    this.recognition.onend = () => this.stopVoice();
                 }
             },
 
-            // Attach Events
-            attachEvents() {
-                this.button.onclick = () => this.toggle();
-                this.sendButton.onclick = () => this.sendMessage();
-                this.voiceButton.onclick = () => this.toggleVoiceInput();
-                this.voiceToggle.onclick = () => this.toggleVoiceOutput();
-
-                this.input.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        this.sendMessage();
-                    }
-                });
-
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && this.isOpen) this.close();
-                });
+            bind() {
+                document.getElementById('bixbyButton').onclick = () => this.toggle();
+                this.sendBtn.onclick = () => this.send();
+                this.voiceBtn.onclick = () => this.toggleVoice();
+                this.voiceToggle.onclick = () => this.toggleOutput();
+                this.input.onkeypress = (e) => {
+                    if (e.key === 'Enter') { e.preventDefault(); this.send(); }
+                };
             },
 
-            // Toggle
             toggle() {
                 this.isOpen ? this.close() : this.open();
             },
 
-            // Open
             open() {
                 this.chat.style.display = 'flex';
-                this.button.style.display = 'none';
+                document.getElementById('bixbyButton').style.display = 'none';
                 this.isOpen = true;
                 setTimeout(() => {
                     this.input.focus();
-                    if (this.messagesArea.children.length === 0) {
-                        this.showWelcome();
-                    }
+                    if (this.msgs.children.length === 0) this.welcome();
                 }, 300);
             },
 
-            // Close
             close() {
                 this.chat.style.display = 'none';
-                this.button.style.display = 'flex';
+                document.getElementById('bixbyButton').style.display = 'flex';
                 this.isOpen = false;
-                this.stopListening();
-                if (this.synthesis) this.synthesis.cancel();
+                this.stopVoice();
             },
 
-            // Toggle Voice Input
-            toggleVoiceInput() {
-                if (!this.recognition) {
-                    this.showStatus('Voice not supported in this browser', 'error');
-                    return;
-                }
-                this.isListening ? this.stopListening() : this.startListening();
+            toggleVoice() {
+                this.listening ? this.stopVoice() : this.startVoice();
             },
 
-            // Start Listening
-            startListening() {
-                try {
-                    this.recognition.start();
-                } catch (error) {
-                    console.error(error);
-                }
+            startVoice() {
+                if (this.recognition) try { this.recognition.start(); } catch(e) {}
             },
 
-            // Stop Listening
-            stopListening() {
-                this.isListening = false;
-                this.voiceButton.classList.remove('listening');
-                this.voiceVisualizer.style.display = 'none';
-                if (this.recognition) {
-                    try {
-                        this.recognition.stop();
-                    } catch (error) {}
-                }
+            stopVoice() {
+                this.listening = false;
+                this.voiceBtn.classList.remove('listening');
+                this.voiceViz.style.display = 'none';
+                if (this.recognition) try { this.recognition.stop(); } catch(e) {}
             },
 
-            // Toggle Voice Output
-            toggleVoiceOutput() {
-                this.voiceEnabled = !this.voiceEnabled;
-                this.voiceToggle.classList.toggle('active', this.voiceEnabled);
-                this.voiceToggle.innerHTML = this.voiceEnabled ?
-                    '<i class="fas fa-volume-up"></i>' :
-                    '<i class="fas fa-volume-mute"></i>';
-                if (!this.voiceEnabled && this.synthesis) {
-                    this.synthesis.cancel();
-                }
+            toggleOutput() {
+                this.voiceOn = !this.voiceOn;
+                this.voiceToggle.classList.toggle('active', this.voiceOn);
+                this.voiceToggle.innerHTML = this.voiceOn ? 
+                    '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
             },
 
-            // Speak
             speak(text) {
-                if (!this.voiceEnabled || !this.synthesis) return;
-                this.synthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text.substring(0, 300));
-                utterance.lang = 'en-US';
-                utterance.rate = 0.95;
-                this.synthesis.speak(utterance);
+                if (this.voiceOn && this.synthesis) {
+                    this.synthesis.cancel();
+                    const u = new SpeechSynthesisUtterance(text.substring(0, 300));
+                    u.lang = 'en-US';
+                    u.rate = 0.95;
+                    this.synthesis.speak(u);
+                }
             },
 
-            // Show Status
-            showStatus(message, type = 'error') {
-                const existing = this.messagesArea.querySelector('.status-message');
-                if (existing) existing.remove();
-
-                const status = document.createElement('div');
-                status.className = `status-message ${type}`;
-                status.textContent = message;
-                this.messagesArea.appendChild(status);
-                this.scrollToBottom();
-
-                setTimeout(() => {
-                    if (status.parentNode) status.remove();
-                }, 3000);
-            },
-
-            // Use Suggestion
-            useSuggestion(text) {
+            ask(text) {
                 this.input.value = text;
-                this.sendMessage();
+                this.send();
             },
 
-            // Send Message
-            async sendMessage() {
+            async send() {
                 const text = this.input.value.trim();
                 if (!text || this.isTyping) return;
 
-                this.addMessage(text, 'user');
+                this.add(text, 'user');
                 this.input.value = '';
-                this.sendButton.disabled = true;
+                this.sendBtn.disabled = true;
 
-                const typingIndicator = this.showTyping();
+                const typing = this.showTyping();
 
                 try {
-                    console.log('Sending to backend:', text);
-                    
-                    const response = await fetch(`${this.API_URL}/chat`, {
+                    const res = await fetch(`${this.API}/chat`, {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            message: text
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            message: text,
+                            context: this.data
                         })
                     });
 
-                    if (!response.ok) {
-                        throw new Error(`API Error: ${response.status}`);
-                    }
+                    if (!res.ok) throw new Error('API Error');
 
-                    const data = await response.json();
-                    console.log('Backend response:', data);
+                    const data = await res.json();
+                    this.hideTyping(typing);
                     
-                    this.hideTyping(typingIndicator);
-                    
-                    const aiResponse = data.response || data.message || data.reply || 'Sorry, could not generate response.';
-                    this.addMessage(aiResponse, 'assistant');
-                    this.speak(aiResponse);
-                    
-                } catch (error) {
-                    console.error('Backend API Error:', error);
-                    this.hideTyping(typingIndicator);
-                    this.showStatus('Connection error. Using offline mode.', 'error');
-                    
-                    // Fallback response
-                    const fallback = this.getFallbackResponse(text);
-                    this.addMessage(fallback, 'assistant');
-                    this.speak(fallback);
+                    const reply = data.response || data.message || data.reply || this.fallback(text);
+                    this.add(reply, 'assistant');
+                    this.speak(reply);
+                } catch (err) {
+                    this.hideTyping(typing);
+                    const reply = this.fallback(text);
+                    this.add(reply, 'assistant');
+                    this.speak(reply);
                 }
 
-                this.sendButton.disabled = false;
+                this.sendBtn.disabled = false;
             },
 
-            // Fallback Response
-            getFallbackResponse(query) {
-                const q = query.toLowerCase();
-                
+            fallback(q) {
+                q = q.toLowerCase();
                 if (q.includes('project')) {
-                    return "I have built 9+ production-ready projects:\n\n1. Zerodha Clone - Full-stack trading app\n2. BharatMart - E-commerce with Razorpay\n3. Facebook Clone - Social media platform\n4. SangvichatGPT - ChatGPT clone\n5. Airbnb Clone - Property listing\n\nAll are live! Check github.com/prakash-v181";
+                    return "I have 10+ live projects:\n\n1. Zerodha Clone - Trading platform\n2. Facebook Clone - Social media\n3. BharatMart - E-commerce\n4. SangviGPT - AI chatbot\n5. Medibuddy - Disease predictor\n6. YouTube Clone\n7. GitHub Clone\n8. Airbnb Clone\n9. Video Calling App\n10. Selenium Testing Framework\n\nAll deployed and live! Visit my GitHub: github.com/prakash-v181";
                 }
-                
                 if (q.includes('skill') || q.includes('tech')) {
-                    return "My technical skills:\n\nFrontend: React.js, Next.js, Redux, Tailwind CSS\nBackend: Node.js, Express.js, MongoDB\nCloud: AWS, Vercel, GitHub Pages\nTools: Git, VS Code, Postman\n\n3+ years of MERN stack experience!";
+                    return "Skills:\n\nFrontend: React, Next.js, Redux, TypeScript, Tailwind\nBackend: Node.js, NestJS, Express, Spring Boot\nDatabase: MongoDB, MySQL, PostgreSQL\nCloud: AWS, Vercel, Kubernetes\nLanguages: JavaScript, Java, Python\n\nCurrently working as Software Developer at Bluestock and Main Flow Services!";
                 }
-                
-                if (q.includes('contact') || q.includes('email')) {
-                    return "Contact me:\n\nEmail: prakashtare181@gmail.com\nPhone: +91 8050458999\nLocation: Bidar, Karnataka, India\n\nLinkedIn: linkedin.com/in/prakash181gupta/\nGitHub: github.com/prakash-v181\nPortfolio: prakash-v181.github.io/resume-prakash/";
+                if (q.includes('experience') || q.includes('work')) {
+                    return "Current Work:\n\n1. Software Developer - Bluestock (Feb 2025-Present)\n   Building payment microservices with NestJS & Kafka\n\n2. Full-Stack Developer - Main Flow Services (Jan-Apr 2025)\n   Inventory management with TypeScript\n\n3. AI/ML Intern - Edunet Foundation (Dec 2024-Feb 2025)\n   CNN model development\n\nPlus 4+ other professional roles!";
                 }
-                
-                if (q.includes('experience')) {
-                    return "I have 1 years of hands-on MERN stack development experience. Built and deployed 9+ production applications. Worked as an intern at Main Flow Services & Technologies.";
-                }
-                
                 if (q.includes('education')) {
-                    return "BE Computer Science & Engineering from VTU with CGPA 8.1. Strong foundation in DBMS, Operating Systems, Computer Networks, and Data Structures.";
+                    return "Education:\n\n- BE Computer Science (VTU) - Nov 2023\n  Lingaraj Appa Engineering College\n\n- Diploma CS - Dec 2019\n  Govt Polytechnic Aurad B\n\nCertifications:\n- MERN Stack (Apna College)\n- Full Stack Java (Simplilearn)\n- Cybersecurity (IIT Kanpur)";
                 }
-                
-                if (q.includes('available') || q.includes('hire')) {
-                    return "Yes! I am available immediately for Full Stack Developer positions. Ready to join and open to relocation. Contact: prakashtare181@gmail.com";
+                if (q.includes('contact') || q.includes('email')) {
+                    return "Contact:\n\nEmail: prakashtare181@gmail.com\nPhone: +91 8050458999\nLocation: Bidar, Karnataka\n\nLinks:\nGitHub: github.com/prakash-v181\nLinkedIn: linkedin.com/in/prakash181gupta/\nPortfolio: prakash-v181.github.io/resume-prakash/";
                 }
-                
-                return "Hello! I'm Prakash, a Junior Full Stack Developer with 3+ years of MERN experience and 9+ live projects.\n\nAsk me about:\n- My Projects\n- Technical Skills\n- Work Experience\n- Education\n- Contact Information\n- Availability";
+                return "Hi! I'm Prakash, MERN Stack Developer currently working at Bluestock and Main Flow Services. I've built 10+ live projects and have expertise in React, Node.js, NestJS, TypeScript, AWS, and more!\n\nAsk me about my projects, work experience, skills, or education!";
             },
 
-            // Add Message
-            addMessage(text, type) {
-                const message = document.createElement('div');
-                message.className = `message ${type}`;
-
-                const bubble = document.createElement('div');
-                bubble.className = 'message-bubble';
-                bubble.textContent = text;
-
-                const time = document.createElement('div');
-                time.className = 'message-time';
-                time.textContent = new Date().toLocaleTimeString('en-US', {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-
-                message.appendChild(bubble);
-                if (type === 'user') {
-                    message.appendChild(time);
-                }
-
-                this.messagesArea.appendChild(message);
-                this.scrollToBottom();
+            add(text, type) {
+                const m = document.createElement('div');
+                m.className = `message ${type}`;
+                const b = document.createElement('div');
+                b.className = 'message-bubble';
+                b.textContent = text;
+                const t = document.createElement('div');
+                t.className = 'message-time';
+                t.textContent = new Date().toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'});
+                m.appendChild(b);
+                if (type === 'user') m.appendChild(t);
+                this.msgs.appendChild(m);
+                this.msgs.scrollTop = this.msgs.scrollHeight;
             },
 
-            // Show Typing
             showTyping() {
                 this.isTyping = true;
-                const typing = document.createElement('div');
-                typing.className = 'message assistant';
-                typing.innerHTML = `
-                    <div class="typing-indicator">
-                        <span class="typing-text">Prakash AI is thinking</span>
-                        <div class="typing-dots">
-                            <div class="typing-dot"></div>
-                            <div class="typing-dot"></div>
-                            <div class="typing-dot"></div>
-                        </div>
-                    </div>
-                `;
-                this.messagesArea.appendChild(typing);
-                this.scrollToBottom();
-                return typing;
+                const t = document.createElement('div');
+                t.className = 'message assistant';
+                t.innerHTML = `<div class="typing-indicator"><span class="typing-text">AI thinking...</span><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+                this.msgs.appendChild(t);
+                this.msgs.scrollTop = this.msgs.scrollHeight;
+                return t;
             },
 
-            // Hide Typing
-            hideTyping(element) {
+            hideTyping(el) {
                 this.isTyping = false;
-                if (element && element.parentNode) {
-                    element.remove();
-                }
+                if (el && el.parentNode) el.remove();
             },
 
-            // Scroll to Bottom
-            scrollToBottom() {
-                setTimeout(() => {
-                    this.messagesArea.scrollTop = this.messagesArea.scrollHeight;
-                }, 100);
-            },
-
-            // Clear Chat
             clearChat() {
-                if (confirm('Clear conversation?')) {
-                    this.messagesArea.innerHTML = '';
-                    this.showWelcome();
+                if (confirm('Clear chat?')) {
+                    this.msgs.innerHTML = '';
+                    this.welcome();
                 }
             },
 
-            // Welcome Message
-            showWelcome() {
+            welcome() {
                 setTimeout(() => {
-                    const welcome = "Hello! I'm Prakash AI, your intelligent portfolio assistant.\n\nI can provide information about:\n- MERN Stack Projects\n- Technical Skills\n- Work Experience\n- Education\n- Contact Details\n\nFeel free to ask me anything!";
-                    this.addMessage(welcome, 'assistant');
-                    this.speak(welcome);
+                    const w = "Hello! I'm Prakash AI - your intelligent portfolio assistant.\n\nI can tell you about:\n- 10+ Live MERN Projects\n- Current Work (Bluestock, Main Flow)\n- Technical Skills & Expertise\n- Education & Certifications\n- Contact Information\n\nAsk me anything!";
+                    this.add(w, 'assistant');
+                    this.speak(w);
                 }, 500);
             }
         };
 
-        // Initialize
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => BixbyAI.init());
+            document.addEventListener('DOMContentLoaded', () => AI.init());
         } else {
-            BixbyAI.init();
+            AI.init();
         }
     </script>
 </body>
