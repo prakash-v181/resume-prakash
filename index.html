@@ -942,12 +942,12 @@
                         <h3><strong>Government School <br> Bidar </strong></h3>
                         <span class="school"><a href="https://dtek.karnataka.gov.in/" target="_blank" class=""><i class="fas fa-school"></i>&nbsp; Karnataka Secondary Education <br>Examination Board (KSEEB)</a></span>
                     </div>
-                    <div class="col-md-6 col-sm-12 resume-item mb-4">
+                    <!-- <div class="col-md-6 col-sm-12 resume-item mb-4">
                         <span class="date mb-3 text-uppercase"><span class="icon-calendar"></span> ITI in Electrician</span>
                         <img class="img-fluid" src="images/kar_main_logo.png" alt="">
                         <h3><strong>Government College in Bidar</strong></h3>
                         <span class="school"><a href="https://itiemp.karnataka.gov.in/" target="_blank" class=""><i class="fas fa5-school"></i>&nbsp; Department of Industrial Training <br> and Employment</a></span>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -1943,7 +1943,7 @@ CURRENT WORK EXPERIENCE:
    - AICTE Student ID: STU63e4e781c60ec1675945857
    - Remote
 
-4. Full Stack Web Development - Take It Smart (OPC) Pvt Ltd (April 2023 - Aug 2023)
+4. Full Stack Web Development - Take It Smart (OPC) Pvt Ltd (April 2023 - Aug 2025)
    - Built projects for graduate students
    - Remote
 
@@ -1961,9 +1961,7 @@ EDUCATION:
    Government School Bidar
    Karnataka Secondary Education Examination Board (KSEEB)
 
-4. ITI in Electrician
-   Government College Bidar
-   Department of Industrial Training and Employment
+
 
 MAJOR PROJECTS (ALL LIVE):
 
@@ -2068,7 +2066,7 @@ CERTIFICATIONS & COURSES:
    - CSS preprocessing (SASS/SCSS)
    - Git, GitHub, Heroku, Netlify deployment
 
-2. Full Stack Java Development - Skill-Up by Simplilearn (June 2023 - Sept 2024)
+2. Full Stack Java Development - Skill-Up by Simplilearn (June 2025 - Sept 2025)
    Code: 4360612
    - Frontend: HTML, CSS, JavaScript, React
    - Backend: Java, Spring Boot, Node.js
@@ -2080,11 +2078,7 @@ CERTIFICATIONS & COURSES:
    - Cryptography, security models, tools
    - Cybersecurity threats, vulnerabilities, risks
 
-4. Udemy Courses (May 2024 - Present)
-   - HTML5 and CSS3, JavaScript Essentials
-   - jQuery, ES6 JavaScript, React JS
-   - Git Bash, Node.js, Express.js
-   - MongoDB, NPM
+
 
 OTHER WORK EXPERIENCE:
 
@@ -2279,15 +2273,15 @@ AVAILABILITY: Available for Full Stack Developer positions immediately`,
                     return "Skills:\n\nFrontend: React, Next.js, Redux, TypeScript, Tailwind\nBackend: Node.js, NestJS, Express, Spring Boot\nDatabase: MongoDB, MySQL, PostgreSQL\nCloud: AWS, Vercel, Kubernetes\nLanguages: JavaScript, Java, Python\n\nCurrently working as Software Developer at Bluestock and Main Flow Services!";
                 }
                 if (q.includes('experience') || q.includes('work')) {
-                    return "Current Work:\n\n1. Software Developer - Bluestock (Feb 2025-Present)\n   Building payment microservices with NestJS & Kafka\n\n2. Full-Stack Developer - Main Flow Services (Jan-Apr 2025)\n   Inventory management with TypeScript\n\n3. AI/ML Intern - Edunet Foundation (Dec 2024-Feb 2025)\n   CNN model development\n\nPlus 4+ other professional roles!";
+                    return "Current Work:\n\n1. Software Developer - Bluestock (Feb 2025-Present)\n   Building payment microservices with NestJS & Kafka\n\n2. Full-Stack Developer - Main Flow Services (Jan-Apr 2025)\n   Inventory management with JavScript\n\n3. AI/ML Intern - Edunet Foundation (Dec 2025-Feb 2025)\n   CNN model development\n\nPlus 4+ other professional roles!";
                 }
                 if (q.includes('education')) {
-                    return "Education:\n\n- BE Computer Science (VTU) - Nov 2023\n  Lingaraj Appa Engineering College\n\n- Diploma CS - Dec 2019\n  Govt Polytechnic Aurad B\n\nCertifications:\n- MERN Stack (Apna College)\n- Full Stack Java (Simplilearn)\n- Cybersecurity (IIT Kanpur)";
+                    return "Education:\n\n- BE Computer Science (VTU) - Nov 2025\n  Lingaraj Appa Engineering College\n\n- Diploma CS - Dec 2019\n  Govt Polytechnic Aurad B\n\nCertifications:\n- MERN Stack (Apna College)\n- Full Stack Java (Simplilearn)\n- Cybersecurity (IIT Kanpur)";
                 }
                 if (q.includes('contact') || q.includes('email')) {
                     return "Contact:\n\nEmail: prakashtare181@gmail.com\nPhone: +91 8050458999\nLocation: Bidar, Karnataka\n\nLinks:\nGitHub: github.com/prakash-v181\nLinkedIn: linkedin.com/in/prakash181gupta/\nPortfolio: prakash-v181.github.io/resume-prakash/";
                 }
-                return "Hi! I'm Prakash, MERN Stack Developer currently working at Bluestock and Main Flow Services. I've built 10+ live projects and have expertise in React, Node.js, NestJS, TypeScript, AWS, and more!\n\nAsk me about my projects, work experience, skills, or education!";
+                return "Hi! I'm Prakash, MERN Stack Developer c I've built 10+ live projects and have expertise in React, Node.js, AWS, and more!\n\nAsk me about my projects, work experience, skills, or education!";
             },
 
             add(text, type) {
@@ -2329,7 +2323,7 @@ AVAILABILITY: Available for Full Stack Developer positions immediately`,
 
             welcome() {
                 setTimeout(() => {
-                    const w = "Hello! I'm Prakash AI - your intelligent portfolio assistant.\n\nI can tell you about:\n- 10+ Live MERN Projects\n- Current Work (Bluestock, Main Flow)\n- Technical Skills & Expertise\n- Education & Certifications\n- Contact Information\n\nAsk me anything!";
+                    const w = "Hello! I'm Prakash AI - your intelligent portfolio assistant.\n\nI can tell you about:\n- 10+ Live MERN Projects\n- \n- Technical Skills & Expertise\n- Education & Certifications\n- Contact Information\n\nAsk me anything!";
                     this.add(w, 'assistant');
                     this.speak(w);
                 }, 500);
